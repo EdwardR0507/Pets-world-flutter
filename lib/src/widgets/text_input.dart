@@ -20,6 +20,7 @@ class TextInput extends StatelessWidget {
  Widget build(BuildContext context) {
   return TextFormField(
       decoration: InputDecoration(border: const OutlineInputBorder(), hintText: hintText),
+      keyboardType: keyboardType,
       obscureText: obscureText,
       validator: validator,
       onSaved: onSaved,

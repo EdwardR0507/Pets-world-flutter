@@ -18,7 +18,7 @@ class _SignUpState extends State<SignUp> with ValidationMixins {
       onPressed: () {
         if (_formKey.currentState!.validate()) {
           _formKey.currentState?.save();
-          Navigator.pushNamed(context, "/signupapp");
+          Navigator.pushNamed(context, "/sign-up-app");
         }
       },
       style: ElevatedButton.styleFrom(
@@ -34,7 +34,8 @@ class _SignUpState extends State<SignUp> with ValidationMixins {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            body: Column(children: [
+            body: SingleChildScrollView(
+                child: Column(children: [
       addVerticalSpace(60),
       Image.asset("assets/images/logo.png"),
       addVerticalSpace(30),
@@ -88,6 +89,6 @@ class _SignUpState extends State<SignUp> with ValidationMixins {
                 addVerticalSpace(30),
                 _submitButton()
               ])))
-    ])));
+    ]))));
   }
 }

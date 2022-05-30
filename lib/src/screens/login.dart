@@ -17,6 +17,7 @@ class _LoginState extends State<Login> with ValidationMixins {
       onPressed: () {
         if (_formKey.currentState!.validate()) {
           _formKey.currentState?.save();
+          Navigator.pushNamed(context, "/");
         }
       },
       style: ElevatedButton.styleFrom(
@@ -36,10 +37,10 @@ class _LoginState extends State<Login> with ValidationMixins {
       Image.asset("assets/images/logo.png"),
       addVerticalSpace(30),
       const Text("Inicia Sesión",
-          style: TextStyle(fontWeight: FontWeight.normal, fontSize: 40)),
+          style: TextStyle(fontWeight: FontWeight.normal, fontSize: 40),textAlign: TextAlign.center),
       addVerticalSpace(30),
       const Text("Un gusto volverte a ver por aquí.",
-          style: TextStyle(fontSize: 16)),
+          style: TextStyle(fontSize: 16),textAlign: TextAlign.center),
       addVerticalSpace(30),
       Padding(
           padding: const EdgeInsets.all(15),

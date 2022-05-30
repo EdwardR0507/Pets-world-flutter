@@ -10,7 +10,7 @@ class SignUpApp extends StatefulWidget {
   _SignUpAppState createState() => _SignUpAppState();
 }
 
-class _SignUpAppState extends State<SignUpApp> with ValidationMixins{
+class _SignUpAppState extends State<SignUpApp> with ValidationMixins {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Widget _submitButton() {
@@ -33,15 +33,16 @@ class _SignUpAppState extends State<SignUpApp> with ValidationMixins{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(children: [
+        body: SingleChildScrollView(
+            child: Column(children: [
       addVerticalSpace(60),
       Image.asset("assets/images/logo.png"),
       addVerticalSpace(30),
       const Text("Regístrate",
-          style: TextStyle(fontWeight: FontWeight.normal, fontSize: 40)),
+          style: TextStyle(fontWeight: FontWeight.normal, fontSize: 40),textAlign: TextAlign.center),
       addVerticalSpace(30),
       const Text("¡Genial!, ahora cuéntanos cómo te llamarás en PetsWorld.",
-          style: TextStyle(fontSize: 16)),
+          style: TextStyle(fontSize: 16), textAlign: TextAlign.center,),
       addVerticalSpace(30),
       Padding(
           padding: const EdgeInsets.all(15),
@@ -72,6 +73,6 @@ class _SignUpAppState extends State<SignUpApp> with ValidationMixins{
                 addVerticalSpace(30),
                 _submitButton()
               ])))
-    ]));
+    ])));
   }
 }

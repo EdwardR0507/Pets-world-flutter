@@ -2,13 +2,13 @@ import "package:flutter/material.dart";
 import 'package:pets_world/src/widgets/bottom_navigation.dart';
 import 'package:pets_world/src/widgets/custom_card.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class Shelter extends StatefulWidget {
+  const Shelter({Key? key}) : super(key: key);
   @override
-  _HomeState createState() => _HomeState();
+  _ShelterState createState() => _ShelterState();
 }
 
-class _HomeState extends State<Home> {
+class _ShelterState extends State<Shelter> {
 
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
@@ -70,7 +70,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFF5F5F5),
         iconTheme: const IconThemeData(color: Colors.black),
-        title: const Text("Mascotas Perdidas", style: TextStyle(color: Colors.black)),
+        title: const Text("Mis Refugios", style: TextStyle(color: Colors.black)),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.search),
@@ -90,7 +90,7 @@ class _HomeState extends State<Home> {
       ),
       body: SizedBox(child: Wrap(
         children: const [
-          CustomCard(imagePath: "assets/images/dog.png", title: "Boby", description: "Desaparecido", route: "/")
+          CustomCard(imagePath: "assets/images/dog.png", title: "Santuario Felicidad", description: "Los Olivos", route: "/")
         ],
       )
       ),

@@ -61,7 +61,7 @@ class ValidationMixins {
 
   String? validatePassword(String? value) {
     if (value != null && value.isEmpty) {
-      return 'contraseña es requerida';
+      return 'Contraseña es requerida';
     }else if (value != null && value.length < 6) {
       return 'Contraseña Inválida, debe tener más de 6 caracteres';
     }
