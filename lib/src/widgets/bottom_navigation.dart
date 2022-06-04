@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pets_world/src/fonts/custom_icons.dart';
+import 'package:pets_world/src/helpers/custom_icons.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int _selectedIndex;
