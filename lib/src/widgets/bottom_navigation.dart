@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pets_world/src/fonts/custom_icons.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int _selectedIndex;
@@ -14,17 +15,17 @@ class CustomBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      items: const [
+      items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
+          icon: Icon(CustomIcons.soundDetectionDogbarking48px),
           label: "Mascotas Perdidas",
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.search),
+          icon: Icon(CustomIcons.pets),
           label: "Ver mascotas",
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.favorite),
+          icon: Icon(CustomIcons.village),
           label: "Mis refugios",
         ),
       ],
