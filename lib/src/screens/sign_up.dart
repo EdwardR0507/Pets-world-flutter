@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pets_world/src/widgets/space.dart';
+import 'package:pets_world/src/widgets/submit_button.dart';
 import 'package:pets_world/src/widgets/text_input.dart';
 import 'package:pets_world/src/mixins/validation_mixins.dart';
 
@@ -13,21 +14,11 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> with ValidationMixins {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  Widget _submitButton() {
-    return ElevatedButton(
-      onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          _formKey.currentState?.save();
-          Navigator.pushNamed(context, "/sign-up-app");
-        }
-      },
-      style: ElevatedButton.styleFrom(
-          primary: const Color(0xFF6200EE),
-          fixedSize: const Size(350, 36),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-      child: const Text("SIGUIENTE"),
-    );
+  void _onSignUp() {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState?.save();
+      Navigator.pushNamed(context, "/sign-up-app");
+    }
   }
 
   @override
@@ -87,7 +78,7 @@ class _SignUpState extends State<SignUp> with ValidationMixins {
                       print(value);
                     }),
                 addVerticalSpace(30),
-                _submitButton()
+                CustomSubmitButton(onPressed: _onSignUp, text: "SIGUIENTE")
               ])))
     ]))));
   }

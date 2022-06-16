@@ -1,44 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pets_world/src/widgets/space.dart';
+import 'package:pets_world/src/widgets/submit_button.dart';
 
 class Landing extends StatelessWidget {
   const Landing({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Widget _registerButton() {
-      return ElevatedButton(
-        onPressed: () {
-          Navigator.pushNamed(context, "/sign-up");
-        },
-        style: ElevatedButton.styleFrom(
-            primary: const Color(0xFF6200EE),
-            fixedSize: const Size(120, 40),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10))),
-        child: const Text("REGISTRATE"),
-      );
-    }
-
-    Widget _linkText() {
-      return Text.rich(TextSpan(
-          text: "o ",
-          style: const TextStyle(fontSize: 16, color: Colors.white),
-          children: [
-            TextSpan(
-                text: "Inicia sesión",
-                style: const TextStyle(
-                  decoration: TextDecoration.underline,
-                  fontSize: 16,
-                ),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    Navigator.pushNamed(context, "/login");
-                  })
-          ]));
-    }
-
     return Scaffold(
         body: Container(
       color: const Color(0xFF1976D2),
@@ -61,12 +30,39 @@ class Landing extends StatelessWidget {
                   textAlign: TextAlign.center,
                 )),
             addVerticalSpace(20),
-            _registerButton(),
+            CustomSubmitButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "/sign-up");
+                },
+                text: "REGÍSTRATE",
+                width: 120),
             addVerticalSpace(15),
-            _linkText()
+            const LinkText(),
           ],
         ),
       ),
     ));
+  }
+}
+
+class LinkText extends StatelessWidget {
+  const LinkText({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Text.rich(TextSpan(
+        text: "o ",
+        style: const TextStyle(fontSize: 16, color: Colors.white),
+        children: [
+          TextSpan(
+              text: "Inicia sesión",
+              style: const TextStyle(
+                decoration: TextDecoration.underline,
+                fontSize: 16,
+              ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  Navigator.pushNamed(context, "/login");
+                })
+        ]));
   }
 }

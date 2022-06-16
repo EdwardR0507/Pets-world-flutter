@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import "package:pets_world/src/mixins/validation_mixins.dart";
 import 'package:pets_world/src/widgets/space.dart';
+import 'package:pets_world/src/widgets/submit_button.dart';
 import 'package:pets_world/src/widgets/text_input.dart';
 
 class Login extends StatefulWidget {
@@ -12,21 +13,11 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> with ValidationMixins {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  Widget _submitButton() {
-    return ElevatedButton(
-      onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          _formKey.currentState?.save();
-          Navigator.pushNamed(context, "/");
-        }
-      },
-      style: ElevatedButton.styleFrom(
-          primary: const Color(0xFF6200EE),
-          fixedSize: const Size(350, 36),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-      child: const Text("INICIAR SESIÓN"),
-    );
+  void _onLogin() {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState?.save();
+      Navigator.pushNamed(context, "/");
+    }
   }
 
   @override
@@ -37,10 +28,11 @@ class _LoginState extends State<Login> with ValidationMixins {
       Image.asset("assets/images/logo.png"),
       addVerticalSpace(30),
       const Text("Inicia Sesión",
-          style: TextStyle(fontWeight: FontWeight.normal, fontSize: 40),textAlign: TextAlign.center),
+          style: TextStyle(fontWeight: FontWeight.normal, fontSize: 40),
+          textAlign: TextAlign.center),
       addVerticalSpace(30),
       const Text("Un gusto volverte a ver por aquí.",
-          style: TextStyle(fontSize: 16),textAlign: TextAlign.center),
+          style: TextStyle(fontSize: 16), textAlign: TextAlign.center),
       addVerticalSpace(30),
       Padding(
           padding: const EdgeInsets.all(15),
@@ -62,10 +54,8 @@ class _LoginState extends State<Login> with ValidationMixins {
                       print(value);
                     }),
                 addVerticalSpace(30),
-                _submitButton()
+                CustomSubmitButton(onPressed: _onLogin, text: "INICIAR SESIÓN")
               ])))
     ]));
   }
 }
-
-
