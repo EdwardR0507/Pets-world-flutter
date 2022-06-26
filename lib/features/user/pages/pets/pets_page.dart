@@ -1,16 +1,18 @@
-import "package:flutter/material.dart";
-import 'package:pets_world/src/widgets/bottom_navigation.dart';
-import 'package:pets_world/src/widgets/custom_card.dart';
+import 'package:flutter/material.dart';
+import 'package:pets_world/components/bottom_navigation.dart';
+import 'package:pets_world/components/custom_card.dart';
 
-class Shelter extends StatefulWidget {
-  const Shelter({Key? key}) : super(key: key);
+class PetsPage extends StatefulWidget {
+  static const String routeName = '/pets';
+
+  const PetsPage({Key? key}) : super(key: key);
+
   @override
-  _ShelterState createState() => _ShelterState();
+  _PetsPageState createState() => _PetsPageState();
 }
 
-class _ShelterState extends State<Shelter> {
-
-  int _selectedIndex = 0;
+class _PetsPageState extends State<PetsPage> {
+  int _selectedIndex = 2;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
@@ -23,7 +25,7 @@ class _ShelterState extends State<Shelter> {
       style: optionStyle,
     ),
     Text(
-      'Index 2: Mis Refugios',
+      'Index 2: Mis refugios',
       style: optionStyle,
     ),
   ];
@@ -51,26 +53,22 @@ class _ShelterState extends State<Shelter> {
 
     ListView getList() {
       return ListView(
-        children: [
-          header,
-          getItem(const Icon(Icons.home), "Home", "/"),
-          about
-        ],
+        children: [header, getItem(const Icon(Icons.home), "Home", "/"), about],
       );
     }
 
     return Drawer(child: getList());
   }
- 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF5F5F5),
         iconTheme: const IconThemeData(color: Colors.black),
-        title: const Text("Mis Refugios", style: TextStyle(color: Colors.black)),
+        leading: const Icon(Icons.menu),
+        title:
+            const Text('Mis refugios', style: TextStyle(color: Colors.black)),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.search),
@@ -80,21 +78,39 @@ class _ShelterState extends State<Shelter> {
             },
           ),
         ],
+        backgroundColor: const Color(0xFFF5F5F5),
       ),
       drawer: getDrawer(context),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xff03dac6),
         foregroundColor: Colors.black,
-        onPressed: (){},
+        onPressed: () {
+          // Respond to button press
+        },
         child: const Icon(Icons.add),
       ),
-      body: SizedBox(child: Wrap(
+      body: SizedBox(
+          child: Wrap(
         children: const [
-          CustomCard(imagePath: "assets/images/dog.png", title: "Santuario Felicidad", description: "Los Olivos", route: "/")
+          CustomCard(
+              imagePath: "assets/images/dog.png",
+              title: "Boby",
+              description: "Registrado",
+              route: "/"),
+          CustomCard(
+              imagePath: "assets/images/dog.png",
+              title: "Rush",
+              description: "Registrado",
+              route: "/"),
+          CustomCard(
+              imagePath: "assets/images/dog.png",
+              title: "Tribilín",
+              description: "Registrado",
+              route: "/"),
         ],
-      )
-      ),
-      bottomNavigationBar: CustomBottomNavigationBar(selectedIndex: _selectedIndex, onItemTapped: _onItemTapped),
+      )),
+      bottomNavigationBar: CustomBottomNavigationBar(
+          selectedIndex: _selectedIndex, onItemTapped: _onItemTapped),
     );
   }
 }

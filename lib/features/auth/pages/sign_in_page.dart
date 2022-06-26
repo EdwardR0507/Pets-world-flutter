@@ -1,23 +1,33 @@
 import 'package:flutter/material.dart';
 import "package:pets_world/src/mixins/validation_mixins.dart";
-import 'package:pets_world/src/widgets/space.dart';
-import 'package:pets_world/src/widgets/submit_button.dart';
-import 'package:pets_world/src/widgets/text_input.dart';
+import 'package:pets_world/components/space.dart';
+import 'package:pets_world/components/text_input.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class SignInPage extends StatefulWidget {
+  static const String routeName = '/sign-in';
+  const SignInPage({Key? key}) : super(key: key);
   @override
-  _LoginState createState() => _LoginState();
+  _SignInPageState createState() => _SignInPageState();
 }
 
-class _LoginState extends State<Login> with ValidationMixins {
+class _SignInPageState extends State<SignInPage> with ValidationMixins {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void _onLogin() {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState?.save();
-      Navigator.pushNamed(context, "/");
-    }
+  Widget _submitButton() {
+    return ElevatedButton(
+      onPressed: () {
+        if (_formKey.currentState!.validate()) {
+          _formKey.currentState?.save();
+          Navigator.pushNamed(context, "/");
+        }
+      },
+      style: ElevatedButton.styleFrom(
+          primary: const Color(0xFF6200EE),
+          fixedSize: const Size(350, 36),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+      child: const Text("INICIAR SESIÓN"),
+    );
   }
 
   @override
@@ -54,7 +64,7 @@ class _LoginState extends State<Login> with ValidationMixins {
                       print(value);
                     }),
                 addVerticalSpace(30),
-                CustomSubmitButton(onPressed: _onLogin, text: "INICIAR SESIÓN")
+                _submitButton()
               ])))
     ]));
   }

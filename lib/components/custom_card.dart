@@ -7,10 +7,10 @@ class CustomCard extends StatelessWidget {
   final String route;
   const CustomCard(
       {Key? key,
-      required this.imagePath,
-      required this.title,
-      required this.description,
-      required this.route})
+        required this.imagePath,
+        required this.title,
+        required this.description,
+        required this.route})
       : super(key: key);
   @override
   Widget build(BuildContext context) {

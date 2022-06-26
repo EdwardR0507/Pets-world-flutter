@@ -50,6 +50,13 @@ class ValidationMixins {
     return null;
   }
 
+  String? validateDeatils(String? value) {
+    if (value != null && value.isEmpty) {
+      return 'Detalles es  Requerido';
+    }
+    return null;
+  }
+
   String? validateUser(String? value) {
     if (value != null && value.isEmpty) {
       return 'Usuario es requerido';
@@ -62,8 +69,29 @@ class ValidationMixins {
   String? validatePassword(String? value) {
     if (value != null && value.isEmpty) {
       return 'Contraseña es requerida';
-    }else if (value != null && value.length < 6) {
+    } else if (value != null && value.length < 6) {
       return 'Contraseña Inválida, debe tener más de 6 caracteres';
+    }
+    return null;
+  }
+
+  String? validateDate(String? value) {
+    if (value != null && value.isEmpty) {
+      return 'Fecha es requerida';
+    }
+    return null;
+  }
+
+  String? validateDescription(String? value) {
+    if (value != null && value.isEmpty) {
+      return 'Descripción es requerida';
+    }
+    return null;
+  }
+
+  String? validateNamePet(String? value) {
+    if (value != null && value.isEmpty) {
+      return 'Nombre mascota es requerido';
     }
     return null;
   }

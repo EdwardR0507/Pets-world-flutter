@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pets_world/src/helpers/custom_icons.dart';
+import 'package:pets_world/utils/custom_icons.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int _selectedIndex;
@@ -11,7 +11,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
   })  : _selectedIndex = selectedIndex,
         _onItemTapped = onItemTapped,
         super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(

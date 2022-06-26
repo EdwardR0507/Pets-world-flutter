@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:pets_world/src/widgets/space.dart';
-import 'package:pets_world/src/widgets/submit_button.dart';
-import 'package:pets_world/src/widgets/text_input.dart';
+import 'package:pets_world/components/space.dart';
+import 'package:pets_world/components/submit_button.dart';
+import 'package:pets_world/components/text_input.dart';
 import 'package:pets_world/src/mixins/validation_mixins.dart';
 
-class SignUpApp extends StatefulWidget {
-  const SignUpApp({Key? key}) : super(key: key);
+class SignUpAppPage extends StatefulWidget {
+  static const String routeName = '/sign-up-app';
+
+  const SignUpAppPage({Key? key}) : super(key: key);
 
   @override
-  _SignUpAppState createState() => _SignUpAppState();
+  _SignUpAppPageState createState() => _SignUpAppPageState();
 }
 
-class _SignUpAppState extends State<SignUpApp> with ValidationMixins {
+class _SignUpAppPageState extends State<SignUpAppPage> with ValidationMixins {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void _onSignUpApp() {
+  void _onSignUpAppPage() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState?.save();
     }
@@ -66,7 +68,8 @@ class _SignUpAppState extends State<SignUpApp> with ValidationMixins {
                       print(value);
                     }),
                 addVerticalSpace(30),
-                CustomSubmitButton(onPressed: _onSignUpApp, text: "REGISTRARME")
+                CustomSubmitButton(
+                    onPressed: _onSignUpAppPage, text: "REGISTRARME")
               ])))
     ])));
   }

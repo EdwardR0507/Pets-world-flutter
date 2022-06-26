@@ -1,15 +1,15 @@
 import "package:flutter/material.dart";
-import 'package:pets_world/src/widgets/bottom_navigation.dart';
-import 'package:pets_world/src/widgets/custom_card.dart';
+import 'package:pets_world/src/search/search_delegate.dart';
+import 'package:pets_world/components/bottom_navigation.dart';
+import 'package:pets_world/components/custom_card.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class UserHomePage extends StatefulWidget {
+  const UserHomePage({Key? key}) : super(key: key);
   @override
-  _HomeState createState() => _HomeState();
+  _UserHomePageState createState() => _UserHomePageState();
 }
 
-class _HomeState extends State<Home> {
-
+class _UserHomePageState extends State<UserHomePage> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -51,17 +51,12 @@ class _HomeState extends State<Home> {
 
     ListView getList() {
       return ListView(
-        children: [
-          header,
-          getItem(const Icon(Icons.home), "Home", "/"),
-          about
-        ],
+        children: [header, getItem(const Icon(Icons.home), "home", "/"), about],
       );
     }
 
     return Drawer(child: getList());
   }
- 
 
   @override
   Widget build(BuildContext context) {
@@ -70,13 +65,14 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFF5F5F5),
         iconTheme: const IconThemeData(color: Colors.black),
-        title: const Text("Mascotas Perdidas", style: TextStyle(color: Colors.black)),
+        title: const Text("Mascotas Perdidas",
+            style: TextStyle(color: Colors.black)),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.search),
             tooltip: 'Search',
             onPressed: () {
-              // openSearchPage(context);
+              showSearch(context: context, delegate: PetsLostSearch());
             },
           ),
         ],
@@ -85,16 +81,21 @@ class _HomeState extends State<Home> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xff03dac6),
         foregroundColor: Colors.black,
-        onPressed: (){},
+        onPressed: () {},
         child: const Icon(Icons.add),
       ),
-      body: SizedBox(child: Wrap(
+      body: SizedBox(
+          child: Wrap(
         children: const [
-          CustomCard(imagePath: "assets/images/dog.png", title: "Boby", description: "Desaparecido", route: "/")
+          CustomCard(
+              imagePath: "assets/images/dog.png",
+              title: "Boby",
+              description: "Desaparecido",
+              route: "/")
         ],
-      )
-      ),
-      bottomNavigationBar: CustomBottomNavigationBar(selectedIndex: _selectedIndex, onItemTapped: _onItemTapped),
+      )),
+      bottomNavigationBar: CustomBottomNavigationBar(
+          selectedIndex: _selectedIndex, onItemTapped: _onItemTapped),
     );
   }
 }
