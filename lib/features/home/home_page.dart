@@ -1,6 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pets_world/components/space.dart';
+import 'package:pets_world/features/auth/pages/sign_in_page.dart';
+import 'package:pets_world/features/auth/pages/sign_up_page.dart';
 
 class HomePage extends StatelessWidget {
   static const String routeName = '/landing';
@@ -12,7 +15,7 @@ class HomePage extends StatelessWidget {
     Widget _registerButton() {
       return ElevatedButton(
         onPressed: () {
-          Navigator.pushNamed(context, "/sign-up");
+          Get.toNamed(SignUpPage.routeName);
         },
         style: ElevatedButton.styleFrom(
             primary: const Color(0xFF6200EE),
@@ -36,7 +39,7 @@ class HomePage extends StatelessWidget {
                 ),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
-                    Navigator.pushNamed(context, "/login");
+                    Get.toNamed(SignInPage.routeName);
                   })
           ]));
     }

@@ -1,18 +1,15 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import "package:flutter/material.dart";
-import 'package:flutter/services.dart';
-import 'package:pets_world/components/bottom_navigation.dart';
-import 'package:pets_world/components/custom_card.dart';
+import 'package:get/get.dart';
 import 'package:pets_world/components/space.dart';
-import 'package:pets_world/components/text_input.dart';
 
-import 'package:pets_world/src/mixins/validation_mixins.dart';
+import 'package:pets_world/features/user/pages/pets/pet_details_page.dart';
 
-//Nuevos: Rafa
+import 'package:pets_world/mixin/validation_mixins.dart';
+
 import 'package:pets_world/components/date_input.dart';
 import 'package:pets_world/components/text_input_icon.dart';
 import 'package:pets_world/components/dropdown_input.dart';
@@ -21,72 +18,65 @@ import 'package:pets_world/components/image_input_icon.dart';
 
 import 'package:image_picker/image_picker.dart';
 
-class PetRegisterPage extends StatefulWidget {
+class PetRegisterPage extends StatelessWidget with ValidationMixins {
+  PetRegisterPage({Key? key}) : super(key: key);
   static const String routeName = '/register-pet';
 
-  const PetRegisterPage({Key? key}) : super(key: key);
-  @override
-  _PetRegisterPageState createState() => _PetRegisterPageState();
-}
-
-class _PetRegisterPageState extends State<PetRegisterPage>
-    with ValidationMixins {
-  int _selectedIndex = 0;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final List<DropdownMenuItem<String>>? listaSexo = [
-    DropdownMenuItem(
-      child: Text("Hembra"),
+  final List<DropdownMenuItem<String>>? sexOptions = [
+    const DropdownMenuItem(
       value: "Hembra",
+      child: Text("Hembra"),
     ),
-    DropdownMenuItem(
-      child: Text("Macho"),
+    const DropdownMenuItem(
       value: "Macho",
+      child: Text("Macho"),
     ),
   ];
 
-  final List<DropdownMenuItem<String>>? listaEspecie = [
-    DropdownMenuItem(
-      child: Text("Perro"),
+  final List<DropdownMenuItem<String>>? speciesOptions = [
+    const DropdownMenuItem(
       value: "Perro",
+      child: Text("Perro"),
     ),
-    DropdownMenuItem(
-      child: Text("Gato"),
+    const DropdownMenuItem(
       value: "Gato",
+      child: Text("Gato"),
     ),
-    DropdownMenuItem(
-      child: Text("Loro"),
+    const DropdownMenuItem(
       value: "Loro",
+      child: Text("Loro"),
     ),
   ];
 
-  final List<DropdownMenuItem<String>>? listaRazaPerro = [
-    DropdownMenuItem(
-      child: Text("Beagle"),
+  final List<DropdownMenuItem<String>>? raceOptions = [
+    const DropdownMenuItem(
       value: "Beagle",
+      child: Text("Beagle"),
     ),
-    DropdownMenuItem(
-      child: Text("Labrador retriever"),
+    const DropdownMenuItem(
       value: "Labrador retriever",
+      child: Text("Labrador retriever"),
     ),
-    DropdownMenuItem(
-      child: Text("Bulldog"),
+    const DropdownMenuItem(
       value: "Bulldog",
+      child: Text("Bulldog"),
     ),
   ];
 
-  final List<DropdownMenuItem<String>>? listaTamano = [
-    DropdownMenuItem(
-      child: Text("Pequeño"),
+  final List<DropdownMenuItem<String>>? sizeOptions = [
+    const DropdownMenuItem(
       value: "Pequeño",
+      child: Text("Pequeño"),
     ),
-    DropdownMenuItem(
-      child: Text("Mediano"),
+    const DropdownMenuItem(
       value: "Mediano",
+      child: Text("Mediano"),
     ),
-    DropdownMenuItem(
-      child: Text("Grande"),
+    const DropdownMenuItem(
       value: "Grande",
+      child: Text("Grande"),
     ),
   ];
 
@@ -116,9 +106,10 @@ class _PetRegisterPageState extends State<PetRegisterPage>
       XFile? myImage = await _picker.pickImage(source: ImageSource.gallery);
       if (myImage != null) {
         var selected = File(myImage.path);
-        setState(() {
-          _pickedImage = selected;
-        });
+        _pickedImage = selected;
+        // setState(() {
+        //   _pickedImage = selected;
+        // });
       } else {
         print("Ninguna imagen fue seleccionada");
       }
@@ -127,53 +118,18 @@ class _PetRegisterPageState extends State<PetRegisterPage>
       XFile? myImage = await _picker.pickImage(source: ImageSource.gallery);
       if (myImage != null) {
         var f = await myImage.readAsBytes();
-        setState(() {
-          webImage = f;
-          _pickedImage = File('a');
-        });
+        webImage = f;
+        _pickedImage = File(myImage.path);
+        // setState(() {
+        //   webImage = f;
+        //   _pickedImage = File('a');
+        // });
       } else {
         print("Ninguna imagen fue seleccionada");
       }
     } else {
       print('Algo salió mal');
     }
-  }
-
-  //Para toda la screen
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  Drawer getDrawer(BuildContext context) {
-    DrawerHeader header = const DrawerHeader(child: Text("Settings"));
-
-    AboutListTile about = const AboutListTile(
-        applicationIcon: Icon(Icons.favorite),
-        icon: Icon(Icons.info),
-        child: Text("Acerca de PetsWorld"));
-
-    ListTile getItem(Icon icon, String descripcion, String route) {
-      return ListTile(
-        leading: icon,
-        title: Text(descripcion),
-        onTap: () {
-          Navigator.pushNamed(context, route);
-        },
-      );
-    }
-
-    ListView getList() {
-      return ListView(
-        children: [header, getItem(const Icon(Icons.home), "Home", "/"), about],
-      );
-    }
-
-    return Drawer(child: getList());
   }
 
   Widget _submitButton() {
@@ -193,8 +149,7 @@ class _PetRegisterPageState extends State<PetRegisterPage>
 
           //La imagen web se obtiene como bytes
           //print(webImage.toString());
-
-          Navigator.pushNamed(context, "/sign-up-app");
+          Get.toNamed(PetDetailsPage.routeName);
         }
       },
       style: ElevatedButton.styleFrom(
@@ -202,43 +157,26 @@ class _PetRegisterPageState extends State<PetRegisterPage>
           fixedSize: const Size(350, 36),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-      child: const Text("SIGUIENTE"),
+      child: const Text("Reportar"),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF5F5F5),
-        iconTheme: const IconThemeData(color: Colors.black),
-        title: const Text("Registrar Mascota",
-            style: TextStyle(color: Colors.black)),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.search),
-            tooltip: 'Search',
-            onPressed: () {
-              // openSearchPage(context);
-            },
-          ),
-        ],
-      ),
-      drawer: getDrawer(context),
       body: SingleChildScrollView(
           child: Form(
               child: Column(children: [
         addVerticalSpace(25),
-        Padding(
-            padding: const EdgeInsets.all(15),
-            child: const Text(
+        const Padding(
+            padding: EdgeInsets.all(15),
+            child: Text(
                 "Registra una mascota para que se pueda activar su búsqueda por la comunidad.",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20))),
         addVerticalSpace(15),
-        Padding(
-            padding: const EdgeInsets.all(15),
-            child: const Text(
+        const Padding(
+            padding: EdgeInsets.all(15),
+            child: Text(
                 "Recuerde que mientras más específica sea su descripción, más eficiente será la búsqueda.",
                 style: TextStyle(fontSize: 16))),
         addVerticalSpace(15),
@@ -262,7 +200,7 @@ class _PetRegisterPageState extends State<PetRegisterPage>
                       sexoValue = value;
                     },
                     nameIcon: Icon(Icons.transgender),
-                    listaItems: listaSexo,
+                    listaItems: sexOptions,
                     onChanged: (String? value) {
                       sexoValue = value;
                     },
@@ -283,7 +221,7 @@ class _PetRegisterPageState extends State<PetRegisterPage>
                       especieValue = value;
                     },
                     nameIcon: Icon(Icons.cookie),
-                    listaItems: listaEspecie,
+                    listaItems: speciesOptions,
                     onChanged: (String? value) {
                       especieValue = value;
                     },
@@ -295,7 +233,7 @@ class _PetRegisterPageState extends State<PetRegisterPage>
                       razaValue = value;
                     },
                     nameIcon: Icon(Icons.radar),
-                    listaItems: listaRazaPerro,
+                    listaItems: raceOptions,
                     onChanged: (String? value) {
                       razaValue = value;
                     },
@@ -307,7 +245,7 @@ class _PetRegisterPageState extends State<PetRegisterPage>
                       tamanoValue = value;
                     },
                     nameIcon: Icon(Icons.format_size),
-                    listaItems: listaTamano,
+                    listaItems: sizeOptions,
                     onChanged: (String? value) {
                       tamanoValue = value;
                     },

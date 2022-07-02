@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+
 class ImageInputIcon extends StatelessWidget {
   final String title;
   final IconData? icon;
@@ -11,17 +11,15 @@ class ImageInputIcon extends StatelessWidget {
     required this.title,
     required this.icon,
     required this.onClicked,
-
-  }): super(key: key);
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        minimumSize: Size.fromHeight(56),
+        minimumSize: const Size.fromHeight(56),
         primary: Colors.white,
         onPrimary: Colors.grey,
-        textStyle: TextStyle(fontSize: 17),
+        textStyle: const TextStyle(fontSize: 17),
       ),
       child: Row(
         children: [
@@ -32,6 +30,5 @@ class ImageInputIcon extends StatelessWidget {
       ),
       onPressed: onClicked,
     );
-
   }
 }

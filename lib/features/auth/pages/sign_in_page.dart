@@ -1,37 +1,35 @@
 import 'package:flutter/material.dart';
-import "package:pets_world/src/mixins/validation_mixins.dart";
+import 'package:get/get.dart';
+import 'package:pets_world/features/auth/controllers/sign_in_controller.dart';
 import 'package:pets_world/components/space.dart';
 import 'package:pets_world/components/text_input.dart';
+import 'package:pets_world/mixin/validation_mixins.dart';
 
-class SignInPage extends StatefulWidget {
+class SignInPage extends GetView<SignInController> with ValidationMixins {
   static const String routeName = '/sign-in';
-  const SignInPage({Key? key}) : super(key: key);
-  @override
-  _SignInPageState createState() => _SignInPageState();
-}
-
-class _SignInPageState extends State<SignInPage> with ValidationMixins {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  Widget _submitButton() {
-    return ElevatedButton(
-      onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          _formKey.currentState?.save();
-          Navigator.pushNamed(context, "/");
-        }
-      },
-      style: ElevatedButton.styleFrom(
-          primary: const Color(0xFF6200EE),
-          fixedSize: const Size(350, 36),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-      child: const Text("INICIAR SESIÓN"),
-    );
-  }
+  SignInPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Widget _submitButton() {
+      return ElevatedButton(
+        onPressed: () {
+          if (_formKey.currentState!.validate()) {
+            _formKey.currentState?.save();
+            controller.signIn();
+          }
+        },
+        style: ElevatedButton.styleFrom(
+            primary: const Color(0xFF6200EE),
+            fixedSize: const Size(350, 36),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10))),
+        child: const Text("INICIAR SESIÓN"),
+      );
+    }
+
     return Scaffold(
         body: Column(children: [
       addVerticalSpace(60),
@@ -50,19 +48,17 @@ class _SignInPageState extends State<SignInPage> with ValidationMixins {
               key: _formKey,
               child: Column(children: [
                 TextInput(
-                    hintText: "Nombre de Usuario",
-                    validator: validateUser,
-                    onSaved: (value) {
-                      print(value);
-                    }),
+                  controller: controller.emailController,
+                  hintText: "Email",
+                  validator: validateName,
+                ),
                 addVerticalSpace(30),
                 TextInput(
-                    hintText: "Contraseña",
-                    obscureText: true,
-                    validator: validatePassword,
-                    onSaved: (value) {
-                      print(value);
-                    }),
+                  controller: controller.passwordController,
+                  hintText: "Contraseña",
+                  validator: validatePassword,
+                  obscureText: true,
+                ),
                 addVerticalSpace(30),
                 _submitButton()
               ])))

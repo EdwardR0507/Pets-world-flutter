@@ -1,26 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pets_world/components/space.dart';
 import 'package:pets_world/components/submit_button.dart';
 import 'package:pets_world/components/text_input.dart';
-import 'package:pets_world/src/mixins/validation_mixins.dart';
+import 'package:pets_world/features/auth/controllers/sign_up_app_controller.dart';
+import 'package:pets_world/mixin/validation_mixins.dart';
 
-class SignUpAppPage extends StatefulWidget {
+class SignUpAppPage extends GetView<SignUpAppController> with ValidationMixins {
   static const String routeName = '/sign-up-app';
+  final previousData = Get.arguments['previousData'];
 
-  const SignUpAppPage({Key? key}) : super(key: key);
-
-  @override
-  _SignUpAppPageState createState() => _SignUpAppPageState();
-}
-
-class _SignUpAppPageState extends State<SignUpAppPage> with ValidationMixins {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  void _onSignUpAppPage() {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState?.save();
-    }
-    Navigator.pushNamed(context, "/");
+  SignUpAppPage({Key? key}) : super(key: key);
+  void _onSignUpAppPage(context) {
+    controller.SignUp(previousData);
   }
 
   @override
@@ -43,34 +35,33 @@ class _SignUpAppPageState extends State<SignUpAppPage> with ValidationMixins {
       addVerticalSpace(30),
       Padding(
           padding: const EdgeInsets.all(15),
-          child: Form(
-              key: _formKey,
+          child: SizedBox(
               child: Column(children: [
-                TextInput(
-                    hintText: "Nombre de Usuario",
-                    validator: validateUser,
-                    onSaved: (value) {
-                      print(value);
-                    }),
-                addVerticalSpace(30),
-                TextInput(
-                    hintText: "Correo Electrónico",
-                    validator: validateEmail,
-                    onSaved: (value) {
-                      print(value);
-                    }),
-                addVerticalSpace(30),
-                TextInput(
-                    hintText: "Contraseña",
-                    obscureText: true,
-                    validator: validatePassword,
-                    onSaved: (value) {
-                      print(value);
-                    }),
-                addVerticalSpace(30),
-                CustomSubmitButton(
-                    onPressed: _onSignUpAppPage, text: "REGISTRARME")
-              ])))
+            TextInput(
+              controller: controller.userNameController,
+              hintText: "Nombre de Usuario",
+              validator: validateUser,
+            ),
+            addVerticalSpace(30),
+            TextInput(
+              controller: controller.emailController,
+              hintText: "Correo Electrónico",
+              validator: validateEmail,
+            ),
+            addVerticalSpace(30),
+            TextInput(
+              controller: controller.passwordController,
+              hintText: "Contraseña",
+              validator: validatePassword,
+              obscureText: true,
+            ),
+            addVerticalSpace(30),
+            CustomSubmitButton(
+                onPressed: () {
+                  _onSignUpAppPage(context);
+                },
+                text: "REGISTRARME")
+          ])))
     ])));
   }
 }

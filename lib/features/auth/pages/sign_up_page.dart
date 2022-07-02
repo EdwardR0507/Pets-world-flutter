@@ -1,67 +1,22 @@
-import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:pets_world/repositories/user/models/user_model.dart';
+import 'package:get/get.dart';
+import 'package:pets_world/features/auth/controllers/sign_up_controller.dart';
 import 'package:pets_world/components/space.dart';
 import 'package:pets_world/components/text_input.dart';
-import 'package:pets_world/src/mixins/validation_mixins.dart';
+import 'package:pets_world/mixin/validation_mixins.dart';
 
-class SignUpPage extends StatefulWidget {
+class SignUpPage extends GetView<SignUpController> with ValidationMixins {
   static const String routeName = '/sign-up';
+  SignUpPage({Key? key}) : super(key: key);
 
-  const SignUpPage({Key? key}) : super(key: key);
-  @override
-  _SignUpPageState createState() => _SignUpPageState();
-}
-
-Future createUser(String name, String lastName, String dni, String address,
-    int phone, String? token) async {
-  try {
-    var url = Uri.parse('http://localhost:3000/api/users');
-    var response = await http.post(
-      url,
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
-      body: {
-        'name': name,
-        'lastName': lastName,
-        'dni': dni,
-        'address': address,
-        'phone': phone
-      },
-    );
-    print(response.body);
-    if (response.statusCode == 200) {
-      var data = json.decode(response.body);
-      return UserModel.fromJson(data);
-    } else {
-      throw Exception('Failed to load post');
-    }
-  } catch (e) {
-    print(e);
-  }
-}
-
-class _SignUpPageState extends State<SignUpPage> with ValidationMixins {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void signUpPage(String name, String lastName, String dni, String address,
-      int phone) async {
-    try {
-      var url = '';
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  Widget _submitButton() {
+  Widget _submitButton(context) {
     return ElevatedButton(
       onPressed: () {
         if (_formKey.currentState!.validate()) {
           _formKey.currentState?.save();
-          Navigator.pushNamed(context, "/sign-up-app");
+          controller.checkSignUp();
         }
       },
       style: ElevatedButton.styleFrom(
@@ -94,43 +49,44 @@ class _SignUpPageState extends State<SignUpPage> with ValidationMixins {
               key: _formKey,
               child: Column(children: [
                 TextInput(
-                    hintText: "Nombres",
-                    validator: validateName,
-                    onSaved: (value) {
-                      print(value);
-                    }),
+                  controller: controller.nameController,
+                  hintText: "Nombres",
+                  validator: validateName,
+                ),
                 addVerticalSpace(30),
                 TextInput(
-                    hintText: "Apellidos",
-                    validator: validateLastName,
-                    onSaved: (value) {
-                      print(value);
-                    }),
+                  controller: controller.paternalSurnameController,
+                  hintText: "Apellido Paterno",
+                  validator: validateLastName,
+                ),
                 addVerticalSpace(30),
                 TextInput(
-                    hintText: "DNI",
-                    validator: validateDNI,
-                    keyboardType: TextInputType.number,
-                    onSaved: (value) {
-                      print(value);
-                    }),
+                  controller: controller.maternalSurnameController,
+                  hintText: "Apellido Materno",
+                  validator: validateLastName,
+                ),
                 addVerticalSpace(30),
                 TextInput(
-                    hintText: "Dirección",
-                    validator: validateAddress,
-                    onSaved: (value) {
-                      print(value);
-                    }),
+                  controller: controller.dniController,
+                  hintText: "DNI",
+                  validator: validateDNI,
+                  keyboardType: TextInputType.number,
+                ),
                 addVerticalSpace(30),
                 TextInput(
-                    hintText: "Teléfono",
-                    keyboardType: TextInputType.number,
-                    validator: validatePhone,
-                    onSaved: (value) {
-                      print(value);
-                    }),
+                  controller: controller.addressController,
+                  hintText: "Dirección",
+                  validator: validateAddress,
+                ),
                 addVerticalSpace(30),
-                _submitButton()
+                TextInput(
+                  controller: controller.phoneController,
+                  hintText: "Teléfono",
+                  validator: validatePhone,
+                  keyboardType: TextInputType.number,
+                ),
+                addVerticalSpace(30),
+                _submitButton(context)
               ])))
     ]))));
   }

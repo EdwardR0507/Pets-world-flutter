@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+
 class TextInput extends StatelessWidget {
   final String? hintText;
+  final TextEditingController? controller;
   final bool obscureText;
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
-  final void Function(String?)? onSaved;
 
   @override
   const TextInput({
@@ -13,18 +14,19 @@ class TextInput extends StatelessWidget {
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
     required this.validator,
-    required this.onSaved,
-
-
-  }): super(key: key);
+    this.controller,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      decoration: InputDecoration(border: const OutlineInputBorder(), hintText: hintText),
+      controller: controller,
+      decoration: InputDecoration(
+          label: Text(hintText!),
+          border: const OutlineInputBorder(),
+          hintText: hintText),
       keyboardType: keyboardType,
       obscureText: obscureText,
       validator: validator,
-      onSaved: onSaved,
     );
   }
 }
