@@ -4,7 +4,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:pets_world/features/auth/pages/sign_in_page.dart';
 import 'package:pets_world/features/loss/pages/loss_report_pet_page.dart';
 import 'package:pets_world/features/user/controllers/user_controller.dart';
-import 'package:pets_world/src/search/search_delegate.dart';
 import 'package:pets_world/components/custom_card.dart';
 
 class UserHomePage extends StatelessWidget {

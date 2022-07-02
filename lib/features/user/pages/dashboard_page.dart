@@ -5,7 +5,7 @@ import 'package:pets_world/features/auth/pages/sign_in_page.dart';
 import 'package:pets_world/features/user/controllers/dashboard_controller.dart';
 import 'package:pets_world/features/user/pages/pets/pets_page.dart';
 import 'package:pets_world/features/user/pages/user_home.dart';
-import 'package:pets_world/src/search/search_delegate.dart';
+import 'package:pets_world/features/user/search/search_delegate.dart';
 import 'package:pets_world/utils/custom_icons.dart';
 
 class DashboardPage extends StatelessWidget {
@@ -27,7 +27,7 @@ class DashboardPage extends StatelessWidget {
       return ListView(
         children: [
           getItem(const Icon(Icons.home), "Home",
-              () => Get.toNamed(UserHomePage.routeName)),
+              () => Get.toNamed(DashboardPage.routeName)),
           about,
           getItem(const Icon(Icons.exit_to_app), "Cerrar Sesión", () {
             GetStorage().remove('token');
