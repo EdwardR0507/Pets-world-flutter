@@ -57,7 +57,7 @@ class SignUpAppController extends GetxController {
           ));
       var res = json.decode(response.body);
       print(res);
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         customSnackbar('Éxito', res['msg'], CustomSnackbarType.success);
         Get.toNamed(SignInPage.routeName);
       } else {
