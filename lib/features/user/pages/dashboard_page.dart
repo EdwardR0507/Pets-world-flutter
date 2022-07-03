@@ -1,8 +1,11 @@
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pets_world/components/space.dart';
 import 'package:pets_world/features/auth/pages/sign_in_page.dart';
+import 'package:pets_world/features/loss/pages/loss_report_pet_page.dart';
 import 'package:pets_world/features/user/controllers/dashboard_controller.dart';
+import 'package:pets_world/features/user/pages/pets/pet_register_page.dart';
 import 'package:pets_world/features/user/pages/pets/pets_page.dart';
 import 'package:pets_world/features/user/pages/user_home.dart';
 import 'package:pets_world/features/user/search/search_delegate.dart';
@@ -60,6 +63,23 @@ class DashboardPage extends StatelessWidget {
             ),
           ],
         ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: const Color(0xff03dac6),
+          foregroundColor: Colors.black,
+          onPressed: () {
+            Navigator.of(context).push(
+              PageRouteBuilder(
+                opaque: false,
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    FadeTransition(
+                  opacity: animation,
+                  child: const LateralMenu(),
+                ),
+              ),
+            );
+          },
+          child: const Icon(Icons.add),
+        ),
         drawer: getDrawer(context),
         body: SafeArea(
           child: IndexedStack(
@@ -87,5 +107,50 @@ class DashboardPage extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class LateralMenu extends StatelessWidget {
+  const LateralMenu({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Get.back();
+      },
+      child: Material(
+        color: Colors.black.withOpacity(0.1),
+        child: TweenAnimationBuilder<double>(
+          duration: const Duration(milliseconds: 400),
+          tween: Tween(begin: 1.0, end: 0.0),
+          builder: (context, value, child) {
+            return Transform.translate(
+              offset: Offset(200.0 * value, 0.0),
+              child: child!,
+            );
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              MaterialButton(
+                  onPressed: () {
+                    Get.toNamed(PetRegisterPage.routeName);
+                  },
+                  child: const Text("Registrar Mascota")),
+              addVerticalSpace(10),
+              MaterialButton(
+                  onPressed: () {
+                    Get.toNamed(LossReportPage.routeName);
+                  },
+                  child: const Text("Reportar Mascota")),
+              addVerticalSpace(130)
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
