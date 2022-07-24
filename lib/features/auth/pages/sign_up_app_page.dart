@@ -7,12 +7,11 @@ import 'package:pets_world/features/auth/controllers/sign_up_app_controller.dart
 import 'package:pets_world/mixin/validation_mixins.dart';
 
 class SignUpAppPage extends GetView<SignUpAppController> with ValidationMixins {
-  static const String routeName = '/sign-up-app';
   final previousData = Get.arguments['previousData'];
 
   SignUpAppPage({Key? key}) : super(key: key);
   void _onSignUpAppPage(context) {
-    controller.SignUp(previousData);
+    controller.signUp(previousData);
   }
 
   @override

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pets_world/components/loading_widget.dart';
 
 class SignUpController extends GetxController {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late TextEditingController nameController,
       paternalSurnameController,
       maternalSurnameController,

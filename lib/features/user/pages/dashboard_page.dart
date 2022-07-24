@@ -2,18 +2,14 @@ import "package:flutter/material.dart";
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pets_world/components/space.dart';
-import 'package:pets_world/features/auth/pages/sign_in_page.dart';
-import 'package:pets_world/features/loss/pages/loss_report_pet_page.dart';
 import 'package:pets_world/features/user/controllers/dashboard_controller.dart';
-import 'package:pets_world/features/user/pages/pets/pet_register_page.dart';
-import 'package:pets_world/features/user/pages/pets/pets_page.dart';
+import 'package:pets_world/features/user/pages/pets_page.dart';
 import 'package:pets_world/features/user/pages/user_home.dart';
 import 'package:pets_world/features/user/search/search_delegate.dart';
+import 'package:pets_world/routes/route_names.dart';
 import 'package:pets_world/utils/custom_icons.dart';
 
 class DashboardPage extends StatelessWidget {
-  static const String routeName = "/";
-
   const DashboardPage({Key? key}) : super(key: key);
 
   Drawer getDrawer(BuildContext context) {
@@ -30,11 +26,11 @@ class DashboardPage extends StatelessWidget {
       return ListView(
         children: [
           getItem(const Icon(Icons.home), "Home",
-              () => Get.toNamed(DashboardPage.routeName)),
+              () => Get.toNamed(RouteNames.dashboard)),
           about,
           getItem(const Icon(Icons.exit_to_app), "Cerrar Sesión", () {
             GetStorage().remove('token');
-            Get.offAllNamed(SignInPage.routeName);
+            Get.offAllNamed(RouteNames.signIn);
           })
         ],
       );
@@ -137,13 +133,13 @@ class LateralMenu extends StatelessWidget {
             children: [
               MaterialButton(
                   onPressed: () {
-                    Get.toNamed(PetRegisterPage.routeName);
+                    Get.toNamed(RouteNames.registerPet);
                   },
                   child: const Text("Registrar Mascota")),
               addVerticalSpace(10),
               MaterialButton(
                   onPressed: () {
-                    Get.toNamed(LossReportPage.routeName);
+                    Get.toNamed(RouteNames.reportPet);
                   },
                   child: const Text("Reportar Mascota")),
               addVerticalSpace(130)

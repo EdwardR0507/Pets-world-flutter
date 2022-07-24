@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pets_world/di/app_binding.dart';
 import 'package:pets_world/routes/routes.dart';
 
 void main() async {
@@ -16,6 +17,7 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Pets World',
         initialRoute: initialRoute,
+        initialBinding: AppBinding(),
         onInit: () {
           FocusScopeNode currentFocus = FocusScope.of(context);
           if (!currentFocus.hasPrimaryFocus &&

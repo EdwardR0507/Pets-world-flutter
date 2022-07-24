@@ -2,20 +2,21 @@ import 'package:get/get.dart';
 import 'package:pets_world/features/user/data/models/pet_model.dart';
 import 'package:pets_world/features/user/data/repository/pet_repository.dart';
 
-class PetsController extends GetxController {
+class PetDetailsController extends GetxController {
+  String id = '';
   final PetRepository _petRepository = Get.find();
   RxBool loading = false.obs;
-  List<PetModel>? pets;
+  PetModel? pet;
 
-  void getPets() async {
+  void getPet() async {
     loading.value = true;
-    pets = await _petRepository.getPets();
+    pet = await _petRepository.getPet(id);
     loading.value = false;
   }
 
   @override
   void onReady() {
     super.onReady();
-    getPets();
+    getPet();
   }
 }

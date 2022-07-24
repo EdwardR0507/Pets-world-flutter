@@ -21,6 +21,7 @@ class ImageInputIcon extends StatelessWidget {
         onPrimary: Colors.grey,
         textStyle: const TextStyle(fontSize: 17),
       ),
+      onPressed: onClicked,
       child: Row(
         children: [
           Icon(icon, size: 28),
@@ -28,7 +29,6 @@ class ImageInputIcon extends StatelessWidget {
           Text(title),
         ],
       ),
-      onPressed: onClicked,
     );
   }
 }

@@ -4,14 +4,14 @@ class CustomCard extends StatelessWidget {
   final String imagePath;
   final String title;
   final String description;
-  final String route;
-  const CustomCard(
-      {Key? key,
-        required this.imagePath,
-        required this.title,
-        required this.description,
-        required this.route})
-      : super(key: key);
+  final void Function()? onTap;
+  const CustomCard({
+    Key? key,
+    required this.imagePath,
+    required this.title,
+    required this.description,
+    this.onTap,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -22,7 +22,11 @@ class CustomCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: Column(children: [
         //Image.asset("assets/images/dog.png"),
-        Image.asset(imagePath),
+        Image.asset(
+          imagePath,
+          height: 150,
+          fit: BoxFit.cover,
+        ),
         ListTile(
           title: Text(title, style: const TextStyle(fontSize: 20)),
           subtitle: Text(
@@ -30,9 +34,7 @@ class CustomCard extends StatelessWidget {
             style: TextStyle(color: Colors.black.withOpacity(0.6)),
           ),
           trailing: const Icon(Icons.keyboard_arrow_right),
-          onTap: () {
-            Navigator.pushNamed(context, route);
-          },
+          onTap: onTap,
         ),
       ]),
     );

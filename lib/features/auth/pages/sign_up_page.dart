@@ -6,16 +6,13 @@ import 'package:pets_world/components/text_input.dart';
 import 'package:pets_world/mixin/validation_mixins.dart';
 
 class SignUpPage extends GetView<SignUpController> with ValidationMixins {
-  static const String routeName = '/sign-up';
   SignUpPage({Key? key}) : super(key: key);
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Widget _submitButton(context) {
     return ElevatedButton(
       onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          _formKey.currentState?.save();
+        if (controller.formKey.currentState!.validate()) {
+          controller.formKey.currentState?.save();
           controller.checkSignUp();
         }
       },
@@ -46,7 +43,7 @@ class SignUpPage extends GetView<SignUpController> with ValidationMixins {
       Padding(
           padding: const EdgeInsets.all(15),
           child: Form(
-              key: _formKey,
+              key: controller.formKey,
               child: Column(children: [
                 TextInput(
                   controller: controller.nameController,

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:pets_world/components/loading_widget.dart';
-import 'package:pets_world/features/auth/data/models/user_model.dart';
-import 'package:pets_world/features/auth/pages/sign_in_page.dart';
+import 'package:pets_world/routes/route_names.dart';
 import 'package:pets_world/utils/base_url.dart';
 import 'package:pets_world/utils/custom_snackbar.dart';
 
@@ -29,7 +28,7 @@ class SignUpAppController extends GetxController {
     super.onClose();
   }
 
-  void SignUp(previousData) {
+  void signUp(previousData) {
     Get.showOverlay(
         asyncFunction: () => register(previousData),
         loadingWidget: const Loading());
@@ -56,10 +55,9 @@ class SignUpAppController extends GetxController {
             },
           ));
       var res = json.decode(response.body);
-      print(res);
       if (response.statusCode == 200) {
         customSnackbar('Éxito', res['msg'], CustomSnackbarType.success);
-        Get.toNamed(SignInPage.routeName);
+        Get.toNamed(RouteNames.signIn);
       } else {
         customSnackbar('Error', res['msg'], CustomSnackbarType.error);
         throw Exception('Failed to register');

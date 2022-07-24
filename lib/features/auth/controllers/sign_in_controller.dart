@@ -4,12 +4,12 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:pets_world/components/loading_widget.dart';
-import 'package:pets_world/features/user/pages/dashboard_page.dart';
-import 'package:pets_world/features/user/pages/user_home.dart';
+import 'package:pets_world/routes/route_names.dart';
 import 'package:pets_world/utils/base_url.dart';
 import 'package:pets_world/utils/custom_snackbar.dart';
 
 class SignInController extends GetxController {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late TextEditingController emailController, passwordController;
 
   final token = GetStorage();
@@ -30,10 +30,10 @@ class SignInController extends GetxController {
 
   void signIn() {
     Get.showOverlay(
-        asyncFunction: () => login(), loadingWidget: const Loading());
+        asyncFunction: () => _login(), loadingWidget: const Loading());
   }
 
-  Future login() async {
+  Future _login() async {
     try {
       var url = Uri.parse('${baseUrl}login');
       var response = await http.post(url,
@@ -49,7 +49,7 @@ class SignInController extends GetxController {
       var res = json.decode(response.body);
       if (response.statusCode == 200) {
         token.write('token', res['token']);
-        Get.offAllNamed(DashboardPage.routeName);
+        Get.offAllNamed(RouteNames.dashboard);
       } else {
         customSnackbar('Error', res['msg'], CustomSnackbarType.error);
       }

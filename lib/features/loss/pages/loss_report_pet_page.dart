@@ -7,7 +7,6 @@ import 'package:pets_world/components/text_input.dart';
 import 'package:pets_world/mixin/validation_mixins.dart';
 
 class LossReportPage extends GetView<LossController> with ValidationMixins {
-  static const String routeName = '/report-pet';
   LossReportPage({Key? key}) : super(key: key);
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

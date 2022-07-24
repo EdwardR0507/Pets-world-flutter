@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:pets_world/features/auth/pages/sign_in_page.dart';
-import 'package:pets_world/features/auth/pages/sign_up_app_page.dart';
-import 'package:pets_world/features/auth/pages/sign_up_page.dart';
-import 'package:pets_world/features/home/home_page.dart';
-import 'package:pets_world/features/loss/pages/loss_report_pet_page.dart';
-import 'package:pets_world/features/user/pages/dashboard_page.dart';
-import 'package:pets_world/features/user/pages/pets/pet_details_page.dart';
-import 'package:pets_world/features/user/pages/pets/pet_register_page.dart';
-import 'package:pets_world/features/user/pages/pets/pets_page.dart';
-import 'package:pets_world/features/user/pages/user_home.dart';
+import 'package:pets_world/routes/route_names.dart';
 
 class AuthMiddleware extends GetMiddleware {
   @override
@@ -18,24 +9,23 @@ class AuthMiddleware extends GetMiddleware {
     final token = GetStorage();
     bool isAuth = token.read('token') != null;
 
-    if (route != UserHomePage.routeName &&
-        route != DashboardPage.routeName &&
-        route != PetDetailsPage.routeName &&
-        route != PetRegisterPage.routeName &&
-        route != PetDetailsPage.routeName &&
-        route != LossReportPage.routeName &&
-        route != PetsPage.routeName &&
+    if (route != RouteNames.userHome &&
+        route != RouteNames.dashboard &&
+        route != RouteNames.registerPet &&
+        route != RouteNames.pet &&
+        route != RouteNames.reportPet &&
+        route != RouteNames.pets &&
         isAuth) {
-      return const RouteSettings(name: DashboardPage.routeName);
+      return const RouteSettings(name: RouteNames.dashboard);
     }
 
     if (!isAuth &&
-        route != HomePage.routeName &&
-        route != SignInPage.routeName &&
-        route != SignUpAppPage.routeName &&
-        route != UserHomePage.routeName &&
-        route != SignUpPage.routeName) {
-      return const RouteSettings(name: HomePage.routeName);
+        route != RouteNames.landing &&
+        route != RouteNames.signIn &&
+        route != RouteNames.signUpApp &&
+        route != RouteNames.userHome &&
+        route != RouteNames.signUp) {
+      return const RouteSettings(name: RouteNames.landing);
     }
 
     return null;
