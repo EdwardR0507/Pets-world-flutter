@@ -1,15 +1,16 @@
-import "package:flutter/material.dart";
 import 'package:flutter/foundation.dart';
+import "package:flutter/material.dart";
 import 'package:get/get.dart';
-import 'package:pets_world/components/space.dart';
-import 'package:pets_world/components/date_input.dart';
-import 'package:pets_world/components/text_input.dart';
-import 'package:pets_world/components/dropdown_input.dart';
-import 'package:pets_world/components/text_area_input.dart';
-import 'package:pets_world/components/image_input_icon.dart';
-import 'package:pets_world/features/user/controllers/pet_register_controller.dart';
-import 'package:pets_world/mixin/validation_mixins.dart';
-import 'package:pets_world/routes/route_names.dart';
+
+import '../../../../components/date_input.dart';
+import '../../../../components/dropdown_input.dart';
+import '../../../../components/image_input_icon.dart';
+import '../../../../components/space.dart';
+import '../../../../components/text_area_input.dart';
+import '../../../../components/text_input.dart';
+import '../../../../mixin/validation_mixins.dart';
+import '../../../../routes/route_names.dart';
+import '../controllers/pet_register_controller.dart';
 
 class PetRegisterPage extends GetView<PetRegisterController>
     with ValidationMixins {

@@ -1,29 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pets_world/features/auth/controllers/sign_up_controller.dart';
-import 'package:pets_world/components/space.dart';
-import 'package:pets_world/components/text_input.dart';
-import 'package:pets_world/mixin/validation_mixins.dart';
+import '../../../../components/submit_button.dart';
+import '../../../../components/space.dart';
+import '../../../../components/text_input.dart';
+import '../controllers/sign_up_controller.dart';
+import '../../../../mixin/validation_mixins.dart';
 
 class SignUpPage extends GetView<SignUpController> with ValidationMixins {
   SignUpPage({Key? key}) : super(key: key);
-
-  Widget _submitButton(context) {
-    return ElevatedButton(
-      onPressed: () {
-        if (controller.formKey.currentState!.validate()) {
-          controller.formKey.currentState?.save();
-          controller.checkSignUp();
-        }
-      },
-      style: ElevatedButton.styleFrom(
-          primary: const Color(0xFF6200EE),
-          fixedSize: const Size(350, 36),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-      child: const Text("SIGUIENTE"),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +67,14 @@ class SignUpPage extends GetView<SignUpController> with ValidationMixins {
                   keyboardType: TextInputType.number,
                 ),
                 addVerticalSpace(30),
-                _submitButton(context)
+                CustomSubmitButton(
+                    onPressed: () {
+                      if (controller.formKey.currentState!.validate()) {
+                        controller.formKey.currentState?.save();
+                        controller.checkSignUp();
+                      }
+                    },
+                    text: 'SIGUIENTE'),
               ])))
     ]))));
   }

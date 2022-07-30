@@ -1,8 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pets_world/components/space.dart';
-import 'package:pets_world/routes/route_names.dart';
+
+import '../../../../components/space.dart';
+import '../../../../routes/route_names.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

@@ -1,20 +1,20 @@
 import 'package:get/get.dart';
-import 'package:pets_world/features/auth/bindings/auth_binding.dart';
-import 'package:pets_world/features/auth/pages/sign_in_page.dart';
-import 'package:pets_world/features/auth/pages/sign_up_app_page.dart';
-import 'package:pets_world/features/auth/pages/sign_up_page.dart';
-import 'package:pets_world/features/home/bindings/home_binding.dart';
-import 'package:pets_world/features/home/home_page.dart';
-import 'package:pets_world/features/loss/bindings/loss_binding.dart';
-import 'package:pets_world/features/loss/pages/loss_report_pet_page.dart';
-import 'package:pets_world/features/user/bindings/user_binding.dart';
-import 'package:pets_world/features/user/pages/dashboard_page.dart';
-import 'package:pets_world/features/user/pages/pet_details_page.dart';
-import 'package:pets_world/features/user/pages/pet_register_page.dart';
-import 'package:pets_world/features/user/pages/user_home.dart';
-import 'package:pets_world/features/user/pages/pets_page.dart';
-import 'package:pets_world/mixin/auth_middleware.dart';
-import 'package:pets_world/routes/route_names.dart';
+import '../features/loss/presentation/pages/loss_report_pet_page.dart';
+import '../features/user/presentation/pages/dashboard_page.dart';
+import '../features/user/presentation/pages/pet_details_page.dart';
+import '../features/user/presentation/pages/pet_register_page.dart';
+import '../features/user/presentation/pages/pets_page.dart';
+import '../features/user/presentation/pages/user_home.dart';
+import '../features/auth/bindings/auth_binding.dart';
+import '../features/auth/presentation/pages/sign_in_page.dart';
+import '../features/auth/presentation/pages/sign_up_app_page.dart';
+import '../features/auth/presentation/pages/sign_up_page.dart';
+import '../features/home/bindings/home_binding.dart';
+import '../features/home/presentation/pages/home_page.dart';
+import '../features/loss/bindings/loss_binding.dart';
+import '../features/user/bindings/user_binding.dart';
+import '../mixin/auth_middleware.dart';
+import 'route_names.dart';
 
 const initialRoute = RouteNames.landing;
 

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:pets_world/di/app_binding.dart';
-import 'package:pets_world/routes/routes.dart';
+
+import 'di/app_binding.dart';
+import 'routes/routes.dart';
 
 void main() async {
   await GetStorage.init();

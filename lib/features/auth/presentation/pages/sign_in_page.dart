@@ -1,32 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pets_world/features/auth/controllers/sign_in_controller.dart';
-import 'package:pets_world/components/space.dart';
-import 'package:pets_world/components/text_input.dart';
-import 'package:pets_world/mixin/validation_mixins.dart';
+import '../../../../components/submit_button.dart';
+import '../../../../components/space.dart';
+import '../../../../components/text_input.dart';
+import '../controllers/sign_in_controller.dart';
+import '../../../../mixin/validation_mixins.dart';
 
 class SignInPage extends GetView<SignInController> with ValidationMixins {
   SignInPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Widget _submitButton() {
-      return ElevatedButton(
-        onPressed: () {
-          if (controller.formKey.currentState!.validate()) {
-            controller.formKey.currentState?.save();
-            controller.signIn();
-          }
-        },
-        style: ElevatedButton.styleFrom(
-            primary: const Color(0xFF6200EE),
-            fixedSize: const Size(350, 36),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10))),
-        child: const Text("INICIAR SESIÓN"),
-      );
-    }
-
     return Scaffold(
         body: Column(children: [
       addVerticalSpace(60),
@@ -57,7 +41,14 @@ class SignInPage extends GetView<SignInController> with ValidationMixins {
                   obscureText: true,
                 ),
                 addVerticalSpace(30),
-                _submitButton()
+                CustomSubmitButton(
+                    onPressed: () {
+                      if (controller.formKey.currentState!.validate()) {
+                        controller.formKey.currentState?.save();
+                        controller.signIn();
+                      }
+                    },
+                    text: 'INICIAR SESIÓN')
               ])))
     ]));
   }

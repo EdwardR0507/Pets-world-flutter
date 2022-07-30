@@ -1,9 +1,9 @@
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
-import 'package:pets_world/components/custom_loader.dart';
-import 'package:pets_world/components/space.dart';
-import 'package:pets_world/features/user/controllers/pet_details_controller.dart';
-import 'package:pets_world/routes/route_names.dart';
+import '../../../../components/custom_loader.dart';
+import '../../../../components/space.dart';
+import '../../../../routes/route_names.dart';
+import '../controllers/pet_details_controller.dart';
 
 class PetDetailsPage extends GetView<PetDetailsController> {
   PetDetailsPage({Key? key}) : super(key: key) {
@@ -76,7 +76,7 @@ class PetDetailsPage extends GetView<PetDetailsController> {
                                 Padding(
                                     padding:
                                         const EdgeInsets.fromLTRB(20, 25, 0, 0),
-                                    child: Text(controller.pet!.ownerId,
+                                    child: Text(controller.pet!.ownerName,
                                         style: textStyle)),
                               ],
                             ),

@@ -1,16 +1,18 @@
 import 'package:get/get.dart';
-import 'package:pets_world/features/user/data/models/pet_model.dart';
-import 'package:pets_world/features/user/data/repository/pet_repository.dart';
+import '../../data/models/pet_model.dart';
+import '../../domain/repositories/pet_repository.dart';
 
 class PetDetailsController extends GetxController {
   String id = '';
-  final PetRepository _petRepository = Get.find();
+  final IPetRepository petRepository;
   RxBool loading = false.obs;
-  PetModel? pet;
+  Pet? pet;
+
+  PetDetailsController({required this.petRepository});
 
   void getPet() async {
     loading.value = true;
-    pet = await _petRepository.getPet(id);
+    pet = await petRepository.getPet(id);
     loading.value = false;
   }
 

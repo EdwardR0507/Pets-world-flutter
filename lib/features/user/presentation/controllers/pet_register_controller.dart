@@ -1,21 +1,22 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:pets_world/components/loading_widget.dart';
-import 'package:pets_world/routes/route_names.dart';
-import 'package:pets_world/utils/base_url.dart';
-import 'package:pets_world/utils/custom_snackbar.dart';
+
+import '../../domain/repositories/pet_repository.dart';
 
 class PetRegisterController extends GetxController {
+  final IPetRepository petRepository;
+
   final token = GetStorage().read('token');
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late TextEditingController dateInputController;
+
+  PetRegisterController({required this.petRepository});
 
   final String imagePath = 'assets/images/pet-profile-def.png';
 
@@ -70,44 +71,11 @@ class PetRegisterController extends GetxController {
     }
   }
 
-  void signIn() {
-    Get.showOverlay(
-        asyncFunction: () => _registerPet(), loadingWidget: const Loading());
-  }
-
-  Future _registerPet() async {
-    try {
-      var url = Uri.parse('${baseUrl}pet/register');
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(
-            <String, String>{
-              "name": "Fido",
-              "gender": "Macho",
-              "color": "Marrón",
-              "breed": "Pequines",
-              "characteristics": "marrón pequeño",
-              "size": "Pequeño",
-              "owner_id": "62b7b8c227f461a009d66523",
-              "birthdate": "25-06-2020"
-            },
-          ));
-      var res = json.decode(response.body);
-      if (response.statusCode == 200) {
-        Get.offAllNamed(RouteNames.dashboard);
-        customSnackbar(
-            'Registro exitoso',
-            'Se ha registrado el perro correctamente',
-            CustomSnackbarType.success);
-      } else {
-        customSnackbar('Error', res['msg'], CustomSnackbarType.error);
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+  // void registerPet() {
+  //   Get.showOverlay(
+  //       asyncFunction: () => petRepository.registerPet(),
+  //       loadingWidget: const Loading());
+  // }
 
   @override
   void onInit() {

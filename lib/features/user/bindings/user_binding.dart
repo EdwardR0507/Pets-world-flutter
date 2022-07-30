@@ -1,17 +1,26 @@
 import 'package:get/get.dart';
-import 'package:pets_world/features/user/controllers/dashboard_controller.dart';
-import 'package:pets_world/features/user/controllers/pet_details_controller.dart';
-import 'package:pets_world/features/user/controllers/pet_register_controller.dart';
-import 'package:pets_world/features/user/controllers/pets_controller.dart';
-import 'package:pets_world/features/user/controllers/user_controller.dart';
+
+import '../presentation/controllers/dashboard_controller.dart';
+import '../presentation/controllers/pet_details_controller.dart';
+import '../presentation/controllers/pet_register_controller.dart';
+import '../presentation/controllers/pets_controller.dart';
+import '../presentation/controllers/user_controller.dart';
 
 class UserBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<DashboardController>(() => DashboardController());
+    Get.lazyPut<DashboardController>(() => DashboardController(
+          localStorage: Get.find(),
+        ));
     Get.lazyPut<UserController>(() => UserController());
-    Get.lazyPut<PetsController>(() => PetsController());
-    Get.lazyPut<PetRegisterController>(() => PetRegisterController());
-    Get.lazyPut<PetDetailsController>(() => PetDetailsController());
+    Get.lazyPut<PetsController>(() => PetsController(
+          petRepository: Get.find(),
+        ));
+    Get.lazyPut<PetRegisterController>(() => PetRegisterController(
+          petRepository: Get.find(),
+        ));
+    Get.lazyPut<PetDetailsController>(() => PetDetailsController(
+          petRepository: Get.find(),
+        ));
   }
 }

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pets_world/components/loading_widget.dart';
+import '../../domain/repositories/api_repository.dart';
+import '../../../../components/loading_widget.dart';
 
 class SignUpController extends GetxController {
+  final IApiRepository apiRepository;
+
+  SignUpController({required this.apiRepository});
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late TextEditingController nameController,
       paternalSurnameController,
@@ -35,19 +40,13 @@ class SignUpController extends GetxController {
 
   void checkSignUp() {
     Get.showOverlay(
-        asyncFunction: () => goToPart2(), loadingWidget: const Loading());
-  }
-
-  Future goToPart2() async {
-    Get.toNamed('/sign-up-app', arguments: {
-      'previousData': {
-        'name': nameController.text,
-        'father_lastname': paternalSurnameController.text,
-        'mother_lastname': maternalSurnameController.text,
-        'dni': dniController.text,
-        'address': addressController.text,
-        'phone': phoneController.text
-      }
-    });
+        asyncFunction: () => apiRepository.signUp(
+            nameController.text,
+            paternalSurnameController.text,
+            maternalSurnameController.text,
+            dniController.text,
+            addressController.text,
+            phoneController.text),
+        loadingWidget: const Loading());
   }
 }

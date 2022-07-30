@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pets_world/components/space.dart';
-import 'package:pets_world/features/loss/controllers/loss_controller.dart';
-import 'package:pets_world/components/text_input.dart';
-import 'package:pets_world/mixin/validation_mixins.dart';
+
+import '../../../../components/space.dart';
+import '../../../../components/text_input.dart';
+import '../../../../mixin/validation_mixins.dart';
+import '../controllers/loss_controller.dart';
 
 class LossReportPage extends GetView<LossController> with ValidationMixins {
   LossReportPage({Key? key}) : super(key: key);
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   FilePickerResult? result;
   final String imageName = '';
   final bool isLoadingImage = false;
@@ -39,8 +39,8 @@ class LossReportPage extends GetView<LossController> with ValidationMixins {
   Widget _submitButton() {
     return ElevatedButton(
       onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          _formKey.currentState?.save();
+        if (controller.formKey.currentState!.validate()) {
+          controller.formKey.currentState?.save();
           // Navigator.pushNamed(context, "/");
         }
       },
@@ -73,7 +73,7 @@ class LossReportPage extends GetView<LossController> with ValidationMixins {
           Padding(
               padding: const EdgeInsets.all(15),
               child: Form(
-                  key: _formKey,
+                  key: controller.formKey,
                   child: Column(children: [
                     TextInput(
                       hintText: "Tus nombres",

@@ -41,7 +41,7 @@ class ValidationMixins {
   }
 
   String? validateEmail(String? value) {
-    RegExp exp = RegExp("/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+\$/");
+    RegExp exp = RegExp(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$');
     if (value != null && value.isEmpty) {
       return 'Email es requerido';
     } else if (!exp.hasMatch(value!)) {

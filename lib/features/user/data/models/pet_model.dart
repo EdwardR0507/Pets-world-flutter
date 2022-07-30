@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-class PetModel {
-  PetModel({
+class Pet {
+  Pet({
     required this.birthdate,
     required this.breed,
     required this.characteristics,
@@ -10,6 +10,7 @@ class PetModel {
     required this.id,
     required this.name,
     required this.ownerId,
+    required this.ownerName,
     required this.registeredAt,
     required this.size,
   });
@@ -22,14 +23,15 @@ class PetModel {
   final String id;
   final String name;
   final String ownerId;
+  final String ownerName;
   final String registeredAt;
   final String size;
 
-  factory PetModel.fromJson(String str) => PetModel.fromMap(json.decode(str));
+  factory Pet.fromJson(String str) => Pet.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory PetModel.fromMap(Map<String, dynamic> json) => PetModel(
+  factory Pet.fromMap(Map<String, dynamic> json) => Pet(
         birthdate: json["birthdate"],
         breed: json["breed"],
         characteristics: json["characteristics"],
@@ -38,6 +40,7 @@ class PetModel {
         id: json["id"],
         name: json["name"],
         ownerId: json["owner_id"],
+        ownerName: json["owner_name"],
         registeredAt: json["registered_at"],
         size: json["size"],
       );
@@ -51,6 +54,7 @@ class PetModel {
         "id": id,
         "name": name,
         "owner_id": ownerId,
+        "owner_name": ownerName,
         "registered_at": registeredAt,
         "size": size,
       };
