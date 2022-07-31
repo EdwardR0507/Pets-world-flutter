@@ -15,6 +15,7 @@ class AuthBinding extends Bindings {
         ));
     Get.lazyPut<SignInController>(() => SignInController(
           apiRepository: Get.find(),
+          localStorageRepository: Get.find(),
         ));
   }
 }

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pets_world/features/auth/domain/exceptions/auth_exceptions.dart';
+import 'package:pets_world/features/auth/domain/request/sign_up_request.dart';
+import 'package:pets_world/utils/enums.dart';
 
-import '../../../../components/loading_widget.dart';
-import '../../domain/repositories/api_repository.dart';
+import '../../domain/repositories/auth_repository.dart';
 
 class SignUpAppController extends GetxController {
-  final IApiRepository apiRepository;
+  final IAuthRepository apiRepository;
 
-  SignUpAppController({
-    required this.apiRepository,
-  });
+  SignUpAppController({required this.apiRepository});
 
+  final signUpState = Rx(LoadingState.initial);
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late TextEditingController userNameController,
       emailController,
@@ -32,13 +33,18 @@ class SignUpAppController extends GetxController {
     super.onClose();
   }
 
-  void signUp(previousData) {
-    Get.showOverlay(
-        asyncFunction: () => apiRepository.signUpApp(
-            previousData,
-            emailController.text,
-            userNameController.text,
-            passwordController.text),
-        loadingWidget: const Loading());
+  Future<bool> signUp(previousData) async {
+    try {
+      signUpState.value = LoadingState.loading;
+      await apiRepository.signUp(SignUpRequest(
+          previousData: previousData,
+          email: emailController.text,
+          nickname: userNameController.text,
+          password: passwordController.text));
+      return true;
+    } on AuthException catch (_) {
+      signUpState.value = LoadingState.initial;
+      return false;
+    }
   }
 }

@@ -10,6 +10,7 @@ import '../../domain/repositories/pet_repository.dart';
 import '../models/pet_model.dart';
 
 class PetRepositoryImpl extends IPetRepository {
+  @override
   Future<List<Pet>> getPets() async {
     try {
       var url = Uri.parse('${baseUrl}pets');
@@ -29,6 +30,7 @@ class PetRepositoryImpl extends IPetRepository {
     }
   }
 
+  @override
   Future<Pet> getPet(id) async {
     try {
       var url = Uri.parse('${baseUrl}pet?id=$id');

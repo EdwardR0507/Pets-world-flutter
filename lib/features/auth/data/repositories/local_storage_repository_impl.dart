@@ -4,7 +4,7 @@ import '../../domain/repositories/local_storage_repository.dart';
 
 const _token = 'token';
 
-class LocalStorageImpl extends ILocalStorage {
+class LocalStorageRepositoryImpl extends ILocalStorageRepository {
   @override
   String? getToken() {
     return GetStorage().read(_token);

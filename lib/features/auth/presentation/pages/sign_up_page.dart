@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pets_world/routes/route_names.dart';
 import '../../../../components/submit_button.dart';
 import '../../../../components/space.dart';
 import '../../../../components/text_input.dart';
@@ -71,7 +72,8 @@ class SignUpPage extends GetView<SignUpController> with ValidationMixins {
                     onPressed: () {
                       if (controller.formKey.currentState!.validate()) {
                         controller.formKey.currentState?.save();
-                        controller.checkSignUp();
+                        Get.toNamed(RouteNames.signUpApp,
+                            arguments: controller.data);
                       }
                     },
                     text: 'SIGUIENTE'),

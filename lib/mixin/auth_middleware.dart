@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../features/auth/data/repositories/local_storage_impl.dart';
+import '../features/auth/data/repositories/local_storage_repository_impl.dart';
 import '../routes/route_names.dart';
 
 class AuthMiddleware extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
-    bool isAuth = LocalStorageImpl().getToken() != null;
+    bool isAuth = LocalStorageRepositoryImpl().getToken() != null;
 
     if (route != RouteNames.userHome &&
         route != RouteNames.dashboard &&

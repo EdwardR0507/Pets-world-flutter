@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../domain/repositories/api_repository.dart';
-import '../../../../components/loading_widget.dart';
+import '../../domain/repositories/auth_repository.dart';
 
 class SignUpController extends GetxController {
-  final IApiRepository apiRepository;
+  final IAuthRepository apiRepository;
 
   SignUpController({required this.apiRepository});
 
@@ -38,15 +37,14 @@ class SignUpController extends GetxController {
     super.onClose();
   }
 
-  void checkSignUp() {
-    Get.showOverlay(
-        asyncFunction: () => apiRepository.signUp(
-            nameController.text,
-            paternalSurnameController.text,
-            maternalSurnameController.text,
-            dniController.text,
-            addressController.text,
-            phoneController.text),
-        loadingWidget: const Loading());
-  }
+  Map<String, Map<String, String>> get data => {
+        "previousData": {
+          'name': nameController.text,
+          'fatherLastname': paternalSurnameController.text,
+          'motherLastname': maternalSurnameController.text,
+          'dni': dniController.text,
+          'address': addressController.text,
+          'phone': phoneController.text,
+        }
+      };
 }

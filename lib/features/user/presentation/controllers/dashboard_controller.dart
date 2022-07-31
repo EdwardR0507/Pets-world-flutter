@@ -3,7 +3,7 @@ import '../../../auth/domain/repositories/local_storage_repository.dart';
 import '../../../../routes/route_names.dart';
 
 class DashboardController extends GetxController {
-  final ILocalStorage localStorage;
+  final ILocalStorageRepository localStorage;
   final _selectedIndex = RxInt(0);
 
   DashboardController({required this.localStorage});
