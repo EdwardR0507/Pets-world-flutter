@@ -1,27 +1,31 @@
-import 'dart:io';
+import 'dart:convert';
+import 'dart:html' as html;
 import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:image_picker/image_picker.dart';
 
+import '../../../../utils/enums.dart';
+import '../../domain/exceptions/pet_exception.dart';
 import '../../domain/repositories/pet_repository.dart';
+import '../../domain/request/register_pet_request.dart';
 
 class PetRegisterController extends GetxController {
   final IPetRepository petRepository;
 
-  final token = GetStorage().read('token');
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late TextEditingController dateInputController;
+  late TextEditingController nameInputController;
+  late TextEditingController descriptionInputController;
+  late TextEditingController colorInputController;
 
   PetRegisterController({required this.petRepository});
 
   final String imagePath = 'assets/images/pet-profile-def.png';
 
-  File? pickedImage; // Para movil
-  Uint8List webImage = Uint8List(8); //Para web
+  List<int>? selectedFile;
+  final bytesData = Rx<Uint8List?>(null);
+  final register = Rx(LoadingState.initial);
 
   List<String> sexOptions = ['Macho', 'Hembra'];
   List<String> raceOptions = ['Beagle', 'Labrador retriever', 'Bulldog'];
@@ -38,49 +42,55 @@ class PetRegisterController extends GetxController {
     selectOptions.update(option, (_) => value);
   }
 
-  Future<void> pickImage2() async {
-    //Si es movil
-    if (!kIsWeb) {
-      final ImagePicker picker = ImagePicker();
-      XFile? myImage = await picker.pickImage(source: ImageSource.gallery);
-      if (myImage != null) {
-        var selected = File(myImage.path);
-        pickedImage = selected;
-        // setState(() {
-        //   _pickedImage = selected;
-        // });
-      } else {
-        print("Ninguna imagen fue seleccionada");
-      }
-    } else if (kIsWeb) {
-      final ImagePicker picker = ImagePicker();
-      XFile? myImage = await picker.pickImage(source: ImageSource.gallery);
-      if (myImage != null) {
-        var f = await myImage.readAsBytes();
-        webImage = f;
-        pickedImage = File(myImage.path);
-        // setState(() {
-        //   webImage = f;
-        //   _pickedImage = File('a');
-        // });
-      } else {
-        print("Ninguna imagen fue seleccionada");
-      }
-    } else {
-      print('Algo salió mal');
-    }
+  Future<void> pickImage() async {
+    html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
+    uploadInput.multiple = true;
+    uploadInput.draggable = true;
+    uploadInput.click();
+
+    uploadInput.onChange.listen((event) {
+      final files = uploadInput.files;
+      final file = files![0];
+      final reader = html.FileReader();
+
+      reader.onLoadEnd.listen((event) {
+        bytesData.value = const Base64Decoder()
+            .convert(reader.result.toString().split(",").last);
+        selectedFile = bytesData.value;
+        bytesData.refresh();
+      });
+      reader.readAsDataUrl(file);
+    });
   }
 
-  // void registerPet() {
-  //   Get.showOverlay(
-  //       asyncFunction: () => petRepository.registerPet(),
-  //       loadingWidget: const Loading());
-  // }
+  //TODO: ADD USERID
+  Future<bool> registerPet() async {
+    try {
+      register.value = LoadingState.loading;
+      await petRepository.registerPet(RegisterPetRequest(
+          name: nameInputController.text,
+          gender: selectOptions['sexOptions']!,
+          breed: selectOptions['raceOptions']!,
+          color: colorInputController.text,
+          size: selectOptions['sizeOptions']!,
+          userId: '62de0c3990b81112e78cafed',
+          birthdate: dateInputController.text,
+          characteristics: descriptionInputController.text,
+          img: selectedFile!));
+      return true;
+    } on PetException catch (_) {
+      register.value = LoadingState.initial;
+      return false;
+    }
+  }
 
   @override
   void onInit() {
     super.onInit();
     dateInputController = TextEditingController();
+    nameInputController = TextEditingController();
+    colorInputController = TextEditingController();
+    descriptionInputController = TextEditingController();
   }
 
   @override

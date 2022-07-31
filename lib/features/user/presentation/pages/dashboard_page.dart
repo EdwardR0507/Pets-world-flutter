@@ -78,8 +78,8 @@ class DashboardPage extends GetView<DashboardController> {
         child: Obx(() => IndexedStack(
               index: controller.selectedIndex.value,
               children: const [
-                UserHomePage(),
                 PetsPage(),
+                UserHomePage(),
               ],
             )),
       ),

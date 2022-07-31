@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
-import '../../../../routes/route_names.dart';
 import '../../../../utils/base_url.dart';
-import '../../../../utils/custom_snackbar.dart';
+import '../../domain/entities/pet.dart';
+import '../../domain/exceptions/pet_exception.dart';
 import '../../domain/repositories/pet_repository.dart';
-import '../models/pet_model.dart';
+import '../../domain/request/register_pet_request.dart';
 
 class PetRepositoryImpl extends IPetRepository {
   @override
@@ -21,17 +21,15 @@ class PetRepositoryImpl extends IPetRepository {
             (res['pets'] as List).map((pet) => Pet.fromMap(pet)).toList();
         return data;
       } else {
-        customSnackbar('Error', res['msg'], CustomSnackbarType.error);
-        throw Exception(res['msg']);
+        throw PetException(res['msg']);
       }
     } catch (e) {
-      print(e);
-      throw Exception('Failed to load pets');
+      throw PetException(e.toString());
     }
   }
 
   @override
-  Future<Pet> getPet(id) async {
+  Future<Pet> getPet(String id) async {
     try {
       var url = Uri.parse('${baseUrl}pet?id=$id');
       var response = await http.get(url);
@@ -40,12 +38,10 @@ class PetRepositoryImpl extends IPetRepository {
         final data = Pet.fromMap(res['pet']);
         return data;
       } else {
-        customSnackbar('Error', res['msg'], CustomSnackbarType.error);
-        throw Exception(res['msg']);
+        throw PetException(res['msg']);
       }
     } catch (e) {
-      print(e);
-      throw Exception(e);
+      throw PetException(e.toString());
     }
   }
 
@@ -56,37 +52,35 @@ class PetRepositoryImpl extends IPetRepository {
   }
 
   @override
-  Future<void> registerPet(Pet pet) async {
+  Future<Pet> registerPet(RegisterPetRequest petRequest) async {
     try {
       var url = Uri.parse('${baseUrl}pet/register');
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(
-            <String, String>{
-              "name": "Fido",
-              "gender": "Macho",
-              "color": "Marrón",
-              "breed": "Pequines",
-              "characteristics": "marrón pequeño",
-              "size": "Pequeño",
-              "owner_id": "62b7b8c227f461a009d66523",
-              "birthdate": "25-06-2020"
-            },
-          ));
+      var request = http.MultipartRequest("POST", url);
+      request.headers.addAll({
+        'Content-Type': 'multipart/form-data',
+      });
+      request.files.add(http.MultipartFile.fromBytes('img', petRequest.img,
+          contentType: MediaType('application', 'json'), filename: "img.jpg"));
+      request.fields['name'] = petRequest.name;
+      request.fields['gender'] = petRequest.gender;
+      request.fields['color'] = petRequest.color;
+      request.fields['breed'] = petRequest.breed;
+      request.fields['characteristics'] = petRequest.characteristics;
+      request.fields['size'] = petRequest.size;
+      request.fields['owner_id'] = petRequest.userId;
+      request.fields['birthdate'] = petRequest.birthdate;
+
+      http.Response response =
+          await http.Response.fromStream(await request.send());
       var res = json.decode(response.body);
       if (response.statusCode == 200) {
-        Get.offAllNamed(RouteNames.dashboard);
-        customSnackbar(
-            'Registro exitoso',
-            'Se ha registrado el perro correctamente',
-            CustomSnackbarType.success);
+        final data = Pet.fromMap(res['pet']);
+        return data;
       } else {
-        customSnackbar('Error', res['msg'], CustomSnackbarType.error);
+        throw PetException(res['msg']);
       }
     } catch (e) {
-      print(e);
+      throw PetException(e.toString());
     }
   }
 }

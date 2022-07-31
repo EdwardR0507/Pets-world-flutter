@@ -1,11 +1,8 @@
 import 'dart:convert';
 
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../../routes/route_names.dart';
 import '../../../../utils/base_url.dart';
-import '../../../../utils/custom_snackbar.dart';
 import '../../domain/exceptions/auth_exceptions.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/request/login_request.dart';
@@ -71,7 +68,7 @@ class AuthRepositoryImpl extends IAuthRepository {
         final data = SignUpResponse.fromMap(res);
         return data;
       } else {
-        throw Exception(res['msg']);
+        throw AuthException(res['msg']);
       }
     } catch (e) {
       throw AuthException(e.toString());

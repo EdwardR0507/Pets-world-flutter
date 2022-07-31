@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../data/models/pet_model.dart';
+import '../../domain/entities/pet.dart';
 import '../../domain/repositories/pet_repository.dart';
 
 class PetsController extends GetxController {

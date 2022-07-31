@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+
 class TextAreaInput extends StatelessWidget {
   final String? hintText;
+  final TextEditingController? controller;
+
   final bool obscureText;
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
@@ -14,15 +17,17 @@ class TextAreaInput extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     required this.validator,
     required this.onSaved,
-
-  }): super(key: key);
+    this.controller,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      decoration: InputDecoration(border: const OutlineInputBorder(),
-          hintText: hintText,
+      decoration: InputDecoration(
+        border: const OutlineInputBorder(),
+        hintText: hintText,
       ),
       maxLines: 4,
+      controller: controller,
       keyboardType: keyboardType,
       obscureText: obscureText,
       validator: validator,

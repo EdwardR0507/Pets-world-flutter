@@ -31,11 +31,11 @@ class PetDetailsPage extends GetView<PetDetailsController> {
                               children: [
                                 Container(
                                   height: 200,
-                                  decoration: const BoxDecoration(
+                                  decoration: BoxDecoration(
                                     image: DecorationImage(
                                       fit: BoxFit.fill,
                                       image:
-                                          AssetImage("assets/images/dog.png"),
+                                          NetworkImage(controller.pet!.imgUrl),
                                     ),
                                   ),
                                 ),
@@ -117,7 +117,7 @@ class PetDetailsPage extends GetView<PetDetailsController> {
                                   padding:
                                       const EdgeInsets.fromLTRB(20, 15, 0, 0),
                                   child: Text(
-                                      'Fecha de nacimiento ${_getDate(controller.pet!.birthdate)}',
+                                      'Fecha de nacimiento: ${_getDate(controller.pet!.birthdate)}',
                                       style: textStyle),
                                 ),
                               ],
