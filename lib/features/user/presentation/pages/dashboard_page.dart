@@ -7,10 +7,17 @@ import '../../../../utils/custom_icons.dart';
 import '../../search/search_delegate.dart';
 import '../controllers/dashboard_controller.dart';
 import 'pets_page.dart';
-import 'user_home.dart';
+import 'my_pets_page.dart';
 
 class DashboardPage extends GetView<DashboardController> {
   const DashboardPage({Key? key}) : super(key: key);
+
+  void _logout() {
+    final result = controller.logout();
+    if (result) {
+      Get.offAllNamed(RouteNames.signIn);
+    }
+  }
 
   Drawer getDrawer(BuildContext context) {
     AboutListTile about = const AboutListTile(
@@ -28,8 +35,7 @@ class DashboardPage extends GetView<DashboardController> {
           getItem(const Icon(Icons.home), "Home",
               () => Get.toNamed(RouteNames.dashboard)),
           about,
-          getItem(const Icon(Icons.exit_to_app), "Cerrar Sesión",
-              controller.logout),
+          getItem(const Icon(Icons.exit_to_app), "Cerrar Sesión", _logout),
         ],
       );
     }
@@ -44,8 +50,9 @@ class DashboardPage extends GetView<DashboardController> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFF5F5F5),
         iconTheme: const IconThemeData(color: Colors.black),
-        title: const Text("Mascotas Perdidas",
-            style: TextStyle(color: Colors.black)),
+        title: Obx(() => Text(controller.title.value,
+            style: const TextStyle(color: Colors.black))),
+        centerTitle: true,
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.search),
@@ -79,7 +86,7 @@ class DashboardPage extends GetView<DashboardController> {
               index: controller.selectedIndex.value,
               children: const [
                 PetsPage(),
-                UserHomePage(),
+                MyPetsPage(),
               ],
             )),
       ),

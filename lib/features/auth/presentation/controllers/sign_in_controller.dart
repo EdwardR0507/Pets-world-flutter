@@ -38,6 +38,7 @@ class SignInController extends GetxController {
         email: emailController.text,
         password: passwordController.text,
       ));
+      await localStorageRepository.setUserId(loginResponse.user.id);
       await localStorageRepository.setToken(loginResponse.token);
       return true;
     } on AuthException catch (_) {

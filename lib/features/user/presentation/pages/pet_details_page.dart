@@ -1,13 +1,24 @@
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
+
 import '../../../../components/custom_loader.dart';
 import '../../../../components/space.dart';
 import '../../../../routes/route_names.dart';
+import '../../../../utils/custom_snackbar.dart';
 import '../controllers/pet_details_controller.dart';
 
 class PetDetailsPage extends GetView<PetDetailsController> {
   PetDetailsPage({Key? key}) : super(key: key) {
     controller.id = Get.arguments['id'];
+  }
+  void _deletePet() async {
+    final result = await controller.deletePet();
+    if (result) {
+      Get.offAllNamed(RouteNames.dashboard);
+    } else {
+      customSnackbar(
+          'Error', 'No se pudo eliminar la mascota', CustomSnackbarType.error);
+    }
   }
 
   static const TextStyle textStyle =
@@ -39,19 +50,36 @@ class PetDetailsPage extends GetView<PetDetailsController> {
                                     ),
                                   ),
                                 ),
-                                Positioned(
-                                  right: 20.0,
-                                  bottom: 0.0,
-                                  child: FloatingActionButton(
-                                    backgroundColor: const Color(0xff03dac6),
-                                    foregroundColor: Colors.black,
-                                    onPressed: () {
-                                      Get.toNamed(RouteNames.reportPet,
+                                Visibility(
+                                  visible: Get.arguments['ownerId'] !=
+                                      controller.pet!.ownerId,
+                                  child: Positioned(
+                                    right: 20.0,
+                                    bottom: 0.0,
+                                    child: FloatingActionButton(
+                                      backgroundColor: const Color(0xff03dac6),
+                                      foregroundColor: Colors.black,
+                                      onPressed: () => Get.toNamed(
+                                          RouteNames.reportPet,
                                           arguments: {
                                             'id': controller.id,
-                                          });
-                                    },
-                                    child: const Icon(Icons.campaign),
+                                          }),
+                                      child: const Icon(Icons.campaign),
+                                    ),
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: Get.arguments['ownerId'] ==
+                                      controller.pet!.ownerId,
+                                  child: Positioned(
+                                    right: 20.0,
+                                    bottom: 0.0,
+                                    child: FloatingActionButton(
+                                      backgroundColor: Colors.red,
+                                      foregroundColor: Colors.black,
+                                      onPressed: () => _deletePet(),
+                                      child: const Icon(Icons.delete),
+                                    ),
                                   ),
                                 ),
                               ],

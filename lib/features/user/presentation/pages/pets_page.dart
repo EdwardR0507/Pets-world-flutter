@@ -13,6 +13,7 @@ class PetsPage extends GetView<PetsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(() => SingleChildScrollView(
+            primary: false,
             child: controller.loading.value == true
                 ? const CustomLoader()
                 : SizedBox(
@@ -22,12 +23,13 @@ class PetsPage extends GetView<PetsController> {
                             children: [
                               ...controller.pets!.map((pet) {
                                 return CustomCard(
-                                    imagePath: "assets/images/dog.png",
+                                    image: pet.imgUrl,
                                     title: pet.name,
                                     description: pet.characteristics,
                                     onTap: () {
                                       Get.toNamed(RouteNames.pet, arguments: {
                                         'id': pet.id,
+                                        'ownerId': controller.userId,
                                       });
                                     });
                               }),

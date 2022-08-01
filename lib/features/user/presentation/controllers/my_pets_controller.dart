@@ -1,25 +1,25 @@
 import 'package:get/get.dart';
-import 'package:pets_world/features/auth/domain/repositories/local_storage_repository.dart';
 
+import '../../../auth/domain/repositories/local_storage_repository.dart';
 import '../../domain/entities/pet.dart';
 import '../../domain/exceptions/pet_exception.dart';
 import '../../domain/repositories/pet_repository.dart';
 
-class PetsController extends GetxController {
-  final IPetRepository petRepository;
+class MyPetsController extends GetxController {
   final ILocalStorageRepository localStorageRepository;
+  final IPetRepository petRepository;
   RxBool loading = false.obs;
   List<Pet>? pets;
   String userId = '';
 
-  PetsController(
+  MyPetsController(
       {required this.localStorageRepository, required this.petRepository});
 
-  void getPets() async {
+  void getMyPets() async {
     try {
       loading.value = true;
-      pets = await petRepository.getPets();
       userId = localStorageRepository.getUserId();
+      pets = await petRepository.getPetsByOwnerId(userId);
       loading.value = false;
     } on PetException catch (_) {
       loading.value = false;
@@ -29,6 +29,6 @@ class PetsController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    getPets();
+    getMyPets();
   }
 }

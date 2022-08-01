@@ -9,7 +9,7 @@ class AuthMiddleware extends GetMiddleware {
   RouteSettings? redirect(String? route) {
     bool isAuth = LocalStorageRepositoryImpl().getToken() != null;
 
-    if (route != RouteNames.userHome &&
+    if (route != RouteNames.myPets &&
         route != RouteNames.dashboard &&
         route != RouteNames.registerPet &&
         route != RouteNames.pet &&
@@ -23,7 +23,7 @@ class AuthMiddleware extends GetMiddleware {
         route != RouteNames.landing &&
         route != RouteNames.signIn &&
         route != RouteNames.signUpApp &&
-        route != RouteNames.userHome &&
+        route != RouteNames.myPets &&
         route != RouteNames.signUp) {
       return const RouteSettings(name: RouteNames.landing);
     }

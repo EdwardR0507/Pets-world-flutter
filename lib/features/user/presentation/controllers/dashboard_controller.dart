@@ -1,20 +1,29 @@
 import 'package:get/get.dart';
 import '../../../auth/domain/repositories/local_storage_repository.dart';
-import '../../../../routes/route_names.dart';
 
 class DashboardController extends GetxController {
-  final ILocalStorageRepository localStorage;
+  final ILocalStorageRepository localStorageRepository;
   final _selectedIndex = RxInt(0);
+  final title = RxString('Mascotas Perdidas');
 
-  DashboardController({required this.localStorage});
+  DashboardController({required this.localStorageRepository});
 
-  void logout() {
-    localStorage.removeToken();
-    Get.offAllNamed(RouteNames.signIn);
+  bool logout() {
+    try {
+      localStorageRepository.removeToken();
+      return true;
+    } catch (_) {
+      return false;
+    }
   }
 
   RxInt get selectedIndex => _selectedIndex;
   void setSelectedIndex(int index) {
     _selectedIndex.value = index;
+    if (index == 0) {
+      title.value = 'Mascotas Perdidas';
+    } else if (index == 1) {
+      title.value = 'Mis Mascotas';
+    }
   }
 }

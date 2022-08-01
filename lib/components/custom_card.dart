@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CustomCard extends StatelessWidget {
-  final String imagePath;
+  final String image;
   final String title;
   final String description;
   final void Function()? onTap;
   const CustomCard({
     Key? key,
-    required this.imagePath,
+    required this.image,
     required this.title,
     required this.description,
     this.onTap,
@@ -21,12 +21,7 @@ class CustomCard extends StatelessWidget {
       margin: const EdgeInsets.all(20),
       clipBehavior: Clip.antiAlias,
       child: Column(children: [
-        //Image.asset("assets/images/dog.png"),
-        Image.asset(
-          imagePath,
-          height: 150,
-          fit: BoxFit.cover,
-        ),
+        Image.network(image, fit: BoxFit.cover),
         ListTile(
           title: Text(title, style: const TextStyle(fontSize: 20)),
           subtitle: Text(

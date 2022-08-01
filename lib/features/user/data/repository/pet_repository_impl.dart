@@ -13,7 +13,7 @@ class PetRepositoryImpl extends IPetRepository {
   @override
   Future<List<Pet>> getPets() async {
     try {
-      var url = Uri.parse('${baseUrl}pets');
+      var url = Uri.parse('${baseUrl}pets/all');
       var response = await http.get(url);
       var res = json.decode(response.body);
       if (response.statusCode == 200) {
@@ -29,9 +29,27 @@ class PetRepositoryImpl extends IPetRepository {
   }
 
   @override
-  Future<Pet> getPet(String id) async {
+  Future<List<Pet>> getPetsByOwnerId(String ownerId) async {
     try {
-      var url = Uri.parse('${baseUrl}pet?id=$id');
+      var url = Uri.parse('${baseUrl}pets?owner_id=$ownerId');
+      var response = await http.get(url);
+      var res = json.decode(response.body);
+      if (response.statusCode == 200) {
+        final data =
+            (res['pets'] as List).map((pet) => Pet.fromMap(pet)).toList();
+        return data;
+      } else {
+        throw PetException(res['msg']);
+      }
+    } catch (e) {
+      throw PetException(e.toString());
+    }
+  }
+
+  @override
+  Future<Pet> getPet(String petId) async {
+    try {
+      var url = Uri.parse('${baseUrl}pet?id=$petId');
       var response = await http.get(url);
       var res = json.decode(response.body);
       if (response.statusCode == 200) {
@@ -46,9 +64,20 @@ class PetRepositoryImpl extends IPetRepository {
   }
 
   @override
-  Future<void> deletePet(String id) {
-    // TODO: implement deletePet
-    throw UnimplementedError();
+  Future<String> deletePet(String petId) async {
+    try {
+      var url = Uri.parse('${baseUrl}pet?id=$petId');
+      var response = await http.delete(url);
+      var res = json.decode(response.body);
+      if (response.statusCode == 200) {
+        final msg = res['msg'];
+        return msg;
+      } else {
+        throw PetException(res['msg']);
+      }
+    } catch (e) {
+      throw PetException(e.toString());
+    }
   }
 
   @override

@@ -3,7 +3,8 @@ import 'package:pets_world/features/user/domain/request/register_pet_request.dar
 
 abstract class IPetRepository {
   Future<List<Pet>> getPets();
-  Future<Pet> getPet(String id);
+  Future<List<Pet>> getPetsByOwnerId(String ownerId);
+  Future<Pet> getPet(String petId);
   Future<Pet> registerPet(RegisterPetRequest petRequest);
-  Future<void> deletePet(String id);
+  Future<String> deletePet(String petId);
 }
