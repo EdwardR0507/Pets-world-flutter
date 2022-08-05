@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:pets_world/routes/route_names.dart';
+import '../../../../routes/route_names.dart';
 import '../../../../components/submit_button.dart';
 import '../../../../components/space.dart';
 import '../../../../components/text_input.dart';
@@ -17,7 +18,7 @@ class SignUpPage extends GetView<SignUpController> with ValidationMixins {
             body: SingleChildScrollView(
                 child: Column(children: [
       addVerticalSpace(60),
-      Image.asset("assets/images/logo.png"),
+      SvgPicture.asset("assets/images/logo.svg", height: 120),
       addVerticalSpace(30),
       const Text("Regístrate",
           style: TextStyle(fontWeight: FontWeight.normal, fontSize: 40)),

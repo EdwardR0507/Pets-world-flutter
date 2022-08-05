@@ -7,7 +7,6 @@ class TextAreaInput extends StatelessWidget {
   final bool obscureText;
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
-  final void Function(String?)? onSaved;
 
   @override
   const TextAreaInput({
@@ -16,7 +15,6 @@ class TextAreaInput extends StatelessWidget {
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
     required this.validator,
-    required this.onSaved,
     this.controller,
   }) : super(key: key);
   @override
@@ -31,7 +29,6 @@ class TextAreaInput extends StatelessWidget {
       keyboardType: keyboardType,
       obscureText: obscureText,
       validator: validator,
-      onSaved: onSaved,
     );
   }
 }

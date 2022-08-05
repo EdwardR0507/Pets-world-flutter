@@ -4,16 +4,14 @@ import '../features/auth/bindings/auth_binding.dart';
 import '../features/auth/presentation/pages/sign_in_page.dart';
 import '../features/auth/presentation/pages/sign_up_app_page.dart';
 import '../features/auth/presentation/pages/sign_up_page.dart';
-import '../features/home/bindings/home_binding.dart';
 import '../features/home/presentation/pages/home_page.dart';
-import '../features/loss/bindings/loss_binding.dart';
-import '../features/loss/presentation/pages/loss_report_pet_page.dart';
-import '../features/user/bindings/user_binding.dart';
-import '../features/user/presentation/pages/dashboard_page.dart';
-import '../features/user/presentation/pages/pet_details_page.dart';
-import '../features/user/presentation/pages/pet_register_page.dart';
-import '../features/user/presentation/pages/pets_page.dart';
-import '../features/user/presentation/pages/my_pets_page.dart';
+import '../features/pet/bindings/pet_binding.dart';
+import '../features/pet/presentation/pages/dashboard_page.dart';
+import '../features/pet/presentation/pages/my_pets_page.dart';
+import '../features/pet/presentation/pages/pet_details_page.dart';
+import '../features/pet/presentation/pages/pet_register_page.dart';
+import '../features/pet/presentation/pages/pet_report_page.dart';
+import '../features/pet/presentation/pages/pets_page.dart';
 import '../mixin/auth_middleware.dart';
 import 'route_names.dart';
 
@@ -50,7 +48,6 @@ List<GetPage> pages = [
   GetPage(
     name: RouteNames.landing,
     page: () => const HomePage(),
-    binding: HomeBinding(),
     transition: Transition.noTransition,
     middlewares: [
       AuthMiddleware(),
@@ -59,7 +56,7 @@ List<GetPage> pages = [
   GetPage(
     name: RouteNames.dashboard,
     page: () => const DashboardPage(),
-    binding: UserBinding(),
+    binding: PetBinding(),
     transition: Transition.noTransition,
     middlewares: [
       AuthMiddleware(),
@@ -68,7 +65,7 @@ List<GetPage> pages = [
   GetPage(
     name: RouteNames.myPets,
     page: () => const MyPetsPage(),
-    binding: UserBinding(),
+    binding: PetBinding(),
     transition: Transition.noTransition,
     middlewares: [
       AuthMiddleware(),
@@ -77,7 +74,7 @@ List<GetPage> pages = [
   GetPage(
     name: RouteNames.pet,
     page: () => PetDetailsPage(),
-    binding: UserBinding(),
+    binding: PetBinding(),
     transition: Transition.noTransition,
     middlewares: [
       AuthMiddleware(),
@@ -86,7 +83,7 @@ List<GetPage> pages = [
   GetPage(
     name: RouteNames.registerPet,
     page: () => PetRegisterPage(),
-    binding: UserBinding(),
+    binding: PetBinding(),
     transition: Transition.noTransition,
     middlewares: [
       AuthMiddleware(),
@@ -95,7 +92,7 @@ List<GetPage> pages = [
   GetPage(
     name: RouteNames.pets,
     page: () => const PetsPage(),
-    binding: UserBinding(),
+    binding: PetBinding(),
     transition: Transition.noTransition,
     middlewares: [
       AuthMiddleware(),
@@ -103,8 +100,8 @@ List<GetPage> pages = [
   ),
   GetPage(
     name: RouteNames.reportPet,
-    page: () => LossReportPage(),
-    binding: LossBinding(),
+    page: () => PetReportPage(),
+    binding: PetBinding(),
     transition: Transition.noTransition,
     middlewares: [
       AuthMiddleware(),

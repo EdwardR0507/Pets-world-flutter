@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:pets_world/features/auth/domain/entities/user.dart';
+import '../entities/user.dart';
 
 class SignUpResponse {
   SignUpResponse({

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pets_world/features/auth/domain/exceptions/auth_exceptions.dart';
-import 'package:pets_world/features/auth/domain/request/sign_up_request.dart';
-import 'package:pets_world/utils/enums.dart';
 
+import '../../../../utils/enums.dart';
+import '../../domain/exceptions/auth_exceptions.dart';
 import '../../domain/repositories/auth_repository.dart';
+import '../../domain/request/sign_up_request.dart';
 
 class SignUpAppController extends GetxController {
   final IAuthRepository apiRepository;

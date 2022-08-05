@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:pets_world/utils/enums.dart';
+import '../../../../utils/enums.dart';
 
 import '../../../../components/space.dart';
 import '../../../../components/submit_button.dart';
@@ -29,7 +30,7 @@ class SignInPage extends GetView<SignInController> with ValidationMixins {
       Column(
         children: [
           addVerticalSpace(60),
-          Image.asset("assets/images/logo.png"),
+          SvgPicture.asset("assets/images/logo.svg", height: 120),
           addVerticalSpace(30),
           const Text("Inicia Sesión",
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 40),

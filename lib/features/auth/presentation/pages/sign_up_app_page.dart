@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../components/space.dart';
@@ -33,7 +34,7 @@ class SignUpAppPage extends GetView<SignUpAppController> with ValidationMixins {
           SingleChildScrollView(
             child: Column(children: [
               addVerticalSpace(60),
-              Image.asset("assets/images/logo.png"),
+              SvgPicture.asset("assets/images/logo.svg", height: 120),
               addVerticalSpace(30),
               const Text("Regístrate",
                   style: TextStyle(fontWeight: FontWeight.normal, fontSize: 40),

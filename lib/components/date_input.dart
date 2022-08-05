@@ -6,7 +6,6 @@ class DateInput extends StatelessWidget {
   final bool obscureText;
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
-  final void Function(String?)? onSaved;
   final TextEditingController controller;
 
   @override
@@ -17,7 +16,6 @@ class DateInput extends StatelessWidget {
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
     required this.validator,
-    required this.onSaved,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -37,15 +35,13 @@ class DateInput extends StatelessWidget {
             lastDate: DateTime(2101));
 
         if (pickedDate != null) {
-          String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
-          print(formattedDate); //formatted date output using intl package =>
-          controller.text = formattedDate; //set output date to TextField value.
+          String formattedDate = DateFormat('MM/dd/yyyy').format(pickedDate);
+          controller.text = formattedDate;
         }
       },
       keyboardType: keyboardType,
       obscureText: obscureText,
       validator: validator,
-      onSaved: onSaved,
     );
   }
 }

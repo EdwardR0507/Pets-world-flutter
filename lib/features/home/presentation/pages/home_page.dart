@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../components/space.dart';
@@ -49,7 +50,8 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("assets/images/img_welcome.png", height: 300),
+            SvgPicture.asset("assets/images/welcome.svg", height: 250),
+            addVerticalSpace(20),
             const Text("Pets World",
                 style: TextStyle(
                     fontWeight: FontWeight.normal,

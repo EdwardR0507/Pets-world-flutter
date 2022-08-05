@@ -50,7 +50,7 @@ class ValidationMixins {
     return null;
   }
 
-  String? validateDeatils(String? value) {
+  String? validateDetails(String? value) {
     if (value != null && value.isEmpty) {
       return 'Detalles es  Requerido';
     }
