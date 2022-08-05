@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../features/auth/data/repositories/local_storage_repository_impl.dart';
+import '../../features/auth/data/repositories/local_storage_repository_impl.dart';
 import '../routes/route_names.dart';
 
 class AuthMiddleware extends GetMiddleware {
@@ -23,7 +23,6 @@ class AuthMiddleware extends GetMiddleware {
         route != RouteNames.landing &&
         route != RouteNames.signIn &&
         route != RouteNames.signUpApp &&
-        route != RouteNames.myPets &&
         route != RouteNames.signUp) {
       return const RouteSettings(name: RouteNames.landing);
     }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import '../../../../routes/route_names.dart';
 
-import '../../../../components/space.dart';
-import '../../../../components/text_input.dart';
-import '../../../../mixin/validation_mixins.dart';
+import '../../../../app/components/space.dart';
+import '../../../../app/components/text_input.dart';
+import '../../../../app/mixin/validation_mixins.dart';
+import '../../../../app/routes/route_names.dart';
 import '../controllers/pet_report_controller.dart';
 
 class PetReportPage extends GetView<PetReportController> with ValidationMixins {

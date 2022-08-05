@@ -1,17 +1,17 @@
 import 'package:get/get.dart';
 
-import '../features/auth/bindings/auth_binding.dart';
-import '../features/auth/presentation/pages/sign_in_page.dart';
-import '../features/auth/presentation/pages/sign_up_app_page.dart';
-import '../features/auth/presentation/pages/sign_up_page.dart';
-import '../features/home/presentation/pages/home_page.dart';
-import '../features/pet/bindings/pet_binding.dart';
-import '../features/pet/presentation/pages/dashboard_page.dart';
-import '../features/pet/presentation/pages/my_pets_page.dart';
-import '../features/pet/presentation/pages/pet_details_page.dart';
-import '../features/pet/presentation/pages/pet_register_page.dart';
-import '../features/pet/presentation/pages/pet_report_page.dart';
-import '../features/pet/presentation/pages/pets_page.dart';
+import '../../features/auth/bindings/auth_binding.dart';
+import '../../features/auth/presentation/pages/sign_in_page.dart';
+import '../../features/auth/presentation/pages/sign_up_app_page.dart';
+import '../../features/auth/presentation/pages/sign_up_page.dart';
+import '../../features/home/presentation/pages/home_page.dart';
+import '../../features/pet/bindings/pet_binding.dart';
+import '../../features/pet/presentation/pages/dashboard_page.dart';
+import '../../features/pet/presentation/pages/my_pets_page.dart';
+import '../../features/pet/presentation/pages/pet_details_page.dart';
+import '../../features/pet/presentation/pages/pet_register_page.dart';
+import '../../features/pet/presentation/pages/pet_report_page.dart';
+import '../../features/pet/presentation/pages/pets_page.dart';
 import '../mixin/auth_middleware.dart';
 import 'route_names.dart';
 

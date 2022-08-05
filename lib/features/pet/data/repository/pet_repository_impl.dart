@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
-import '../../../../utils/base_url.dart';
+import '../../../../app/utils/base_url.dart';
 import '../../domain/entities/pet.dart';
 import '../../domain/exceptions/pet_exception.dart';
 import '../../domain/repositories/pet_repository.dart';

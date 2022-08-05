@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../utils/enums.dart';
+import '../../../../app/utils/enums.dart';
 import '../../domain/exceptions/auth_exceptions.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/request/sign_up_request.dart';

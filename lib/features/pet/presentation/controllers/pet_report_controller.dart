@@ -1,10 +1,11 @@
-import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 import 'dart:convert';
 import 'dart:html' as html;
 import 'dart:typed_data';
 
-import '../../../../utils/enums.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
+
+import '../../../../app/utils/enums.dart';
 
 class PetReportController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();

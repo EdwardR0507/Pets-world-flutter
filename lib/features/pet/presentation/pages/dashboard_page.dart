@@ -2,9 +2,9 @@ import "package:flutter/material.dart";
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:get/get.dart';
 
-import '../../../../components/space.dart';
-import '../../../../routes/route_names.dart';
-import '../../../../utils/custom_icons.dart';
+import '../../../../app/components/space.dart';
+import '../../../../app/routes/route_names.dart';
+import '../../../../app/utils/custom_icons.dart';
 import '../../search/search_delegate.dart';
 import '../controllers/dashboard_controller.dart';
 import 'my_pets_page.dart';

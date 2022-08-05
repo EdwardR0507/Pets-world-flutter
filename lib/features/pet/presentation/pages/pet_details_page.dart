@@ -1,10 +1,10 @@
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
 
-import '../../../../components/custom_loader.dart';
-import '../../../../components/space.dart';
-import '../../../../routes/route_names.dart';
-import '../../../../utils/custom_snackbar.dart';
+import '../../../../app/components/custom_loader.dart';
+import '../../../../app/components/space.dart';
+import '../../../../app/routes/route_names.dart';
+import '../../../../app/utils/custom_snackbar.dart';
 import '../controllers/pet_details_controller.dart';
 
 class PetDetailsPage extends GetView<PetDetailsController> {
@@ -28,9 +28,10 @@ class PetDetailsPage extends GetView<PetDetailsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: const Color(0xFF6200EE),
+          backgroundColor: const Color(0xFFF5F5F5),
           leading: IconButton(
               icon: const Icon(Icons.arrow_back),
+              color: Colors.black,
               onPressed: () => Get.offAllNamed(RouteNames.dashboard))),
       backgroundColor: const Color(0xFFF5F5F5),
       body: Obx(

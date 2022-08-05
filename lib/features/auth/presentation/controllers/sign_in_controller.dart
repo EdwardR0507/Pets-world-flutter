@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../../app/utils/enums.dart';
 import '../../domain/exceptions/auth_exceptions.dart';
+import '../../domain/repositories/auth_repository.dart';
 import '../../domain/repositories/local_storage_repository.dart';
 import '../../domain/request/login_request.dart';
-import '../../../../utils/enums.dart';
-import '../../domain/repositories/auth_repository.dart';
 
 class SignInController extends GetxController {
   final IAuthRepository apiRepository;

@@ -1,9 +1,9 @@
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
+import 'package:pets_world/app/components/custom_card.dart';
+import 'package:pets_world/app/components/custom_loader.dart';
+import 'package:pets_world/app/routes/route_names.dart';
 
-import '../../../../components/custom_card.dart';
-import '../../../../components/custom_loader.dart';
-import '../../../../routes/route_names.dart';
 import '../controllers/my_pets_controller.dart';
 
 class MyPetsPage extends GetView<MyPetsController> {

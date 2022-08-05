@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import '../../../../routes/route_names.dart';
-import '../../../../components/submit_button.dart';
-import '../../../../components/space.dart';
-import '../../../../components/text_input.dart';
+
+import '../../../../app/components/space.dart';
+import '../../../../app/components/submit_button.dart';
+import '../../../../app/components/text_input.dart';
+import '../../../../app/mixin/validation_mixins.dart';
+import '../../../../app/routes/route_names.dart';
 import '../controllers/sign_up_controller.dart';
-import '../../../../mixin/validation_mixins.dart';
 
 class SignUpPage extends GetView<SignUpController> with ValidationMixins {
   SignUpPage({Key? key}) : super(key: key);

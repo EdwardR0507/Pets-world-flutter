@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../../../../utils/base_url.dart';
+import '../../../../app/utils/base_url.dart';
 import '../../domain/exceptions/auth_exceptions.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/request/login_request.dart';

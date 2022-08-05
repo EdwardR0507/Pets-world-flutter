@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import '../../../../utils/enums.dart';
 
-import '../../../../components/space.dart';
-import '../../../../components/submit_button.dart';
-import '../../../../components/text_input.dart';
-import '../../../../mixin/validation_mixins.dart';
-import '../../../../routes/route_names.dart';
-import '../../../../utils/custom_snackbar.dart';
+import '../../../../app/components/space.dart';
+import '../../../../app/components/submit_button.dart';
+import '../../../../app/components/text_input.dart';
+import '../../../../app/mixin/validation_mixins.dart';
+import '../../../../app/routes/route_names.dart';
+import '../../../../app/utils/custom_snackbar.dart';
+import '../../../../app/utils/enums.dart';
 import '../controllers/sign_in_controller.dart';
 
 class SignInPage extends GetView<SignInController> with ValidationMixins {

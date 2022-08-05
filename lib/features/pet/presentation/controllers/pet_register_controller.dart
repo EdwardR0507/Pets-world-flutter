@@ -4,9 +4,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../auth/domain/repositories/local_storage_repository.dart';
 
-import '../../../../utils/enums.dart';
+import '../../../../app/utils/enums.dart';
+import '../../../auth/domain/repositories/local_storage_repository.dart';
 import '../../domain/exceptions/pet_exception.dart';
 import '../../domain/repositories/pet_repository.dart';
 import '../../domain/request/register_pet_request.dart';

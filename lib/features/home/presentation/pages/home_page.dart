@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../../../components/space.dart';
-import '../../../../routes/route_names.dart';
+import '../../../../app/components/space.dart';
+import '../../../../app/routes/route_names.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
