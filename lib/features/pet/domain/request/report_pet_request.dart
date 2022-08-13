@@ -1,14 +1,14 @@
 class ReportPetRequest {
+  String reporterId;
   String petId;
-  String name;
   String address;
   String details;
-  dynamic img;
+  dynamic reportedImg;
 
   ReportPetRequest(
-      {required this.petId,
-      required this.name,
+      {required this.reporterId,
+      required this.petId,
       required this.address,
       required this.details,
-      required this.img});
+      required this.reportedImg});
 }

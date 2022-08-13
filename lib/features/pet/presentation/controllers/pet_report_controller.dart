@@ -1,53 +1,54 @@
-import 'dart:convert';
-import 'dart:html' as html;
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../../../app/utils/enums.dart';
+import '../../../auth/domain/repositories/local_storage_repository.dart';
+import '../../domain/exceptions/pet_exception.dart';
+import '../../domain/repositories/pet_repository.dart';
+import '../../domain/request/report_pet_request.dart';
 
 class PetReportController extends GetxController {
+  final ILocalStorageRepository localStorageRepository;
+  final IPetRepository petRepository;
+
+  PetReportController(
+      {required this.localStorageRepository, required this.petRepository});
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  late TextEditingController nameController,
-      addressController,
-      detailsController;
-  List<int>? selectedFile;
-  final bytesData = Rx<Uint8List?>(null);
+  late TextEditingController addressController, detailsController;
   final loading = Rx(LoadingState.initial);
+  String petId = '';
+  Uint8List reportedImg = Uint8List(0);
 
-  Future<void> pickImage() async {
-    html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
-    uploadInput.multiple = true;
-    uploadInput.draggable = true;
-    uploadInput.click();
-
-    uploadInput.onChange.listen((event) {
-      final files = uploadInput.files;
-      final file = files![0];
-      final reader = html.FileReader();
-
-      reader.onLoadEnd.listen((event) {
-        bytesData.value = const Base64Decoder()
-            .convert(reader.result.toString().split(",").last);
-        selectedFile = bytesData.value;
-        bytesData.refresh();
-      });
-      reader.readAsDataUrl(file);
-    });
+  Future<bool> reportPet() async {
+    try {
+      loading.value = LoadingState.loading;
+      final userId = localStorageRepository.getUserId();
+      final res = await petRepository.reportPet(ReportPetRequest(
+          reporterId: userId,
+          petId: petId,
+          address: addressController.text,
+          details: detailsController.text,
+          reportedImg: reportedImg));
+      print(res);
+      return true;
+    } on PetException catch (_) {
+      loading.value = LoadingState.initial;
+      return false;
+    }
   }
 
   @override
   void onInit() {
     super.onInit();
-    nameController = TextEditingController();
     addressController = TextEditingController();
     detailsController = TextEditingController();
   }
 
   @override
   void onClose() {
-    nameController.dispose();
     addressController.dispose();
     detailsController.dispose();
     super.onClose();

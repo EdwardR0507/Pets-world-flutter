@@ -14,6 +14,7 @@ class AuthMiddleware extends GetMiddleware {
         route != RouteNames.registerPet &&
         route != RouteNames.pet &&
         route != RouteNames.reportPet &&
+        route != RouteNames.checkImage &&
         route != RouteNames.pets &&
         isAuth) {
       return const RouteSettings(name: RouteNames.dashboard);

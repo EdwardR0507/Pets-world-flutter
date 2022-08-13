@@ -6,6 +6,7 @@ import '../../features/auth/presentation/pages/sign_up_app_page.dart';
 import '../../features/auth/presentation/pages/sign_up_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/pet/bindings/pet_binding.dart';
+import '../../features/pet/presentation/pages/check_image_page.dart';
 import '../../features/pet/presentation/pages/dashboard_page.dart';
 import '../../features/pet/presentation/pages/my_pets_page.dart';
 import '../../features/pet/presentation/pages/pet_details_page.dart';
@@ -92,6 +93,15 @@ List<GetPage> pages = [
   GetPage(
     name: RouteNames.pets,
     page: () => const PetsPage(),
+    binding: PetBinding(),
+    transition: Transition.noTransition,
+    middlewares: [
+      AuthMiddleware(),
+    ],
+  ),
+  GetPage(
+    name: RouteNames.checkImage,
+    page: () => const CheckImagePage(),
     binding: PetBinding(),
     transition: Transition.noTransition,
     middlewares: [

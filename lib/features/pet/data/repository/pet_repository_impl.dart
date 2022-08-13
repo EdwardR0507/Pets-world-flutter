@@ -142,27 +142,28 @@ class PetRepositoryImpl extends IPetRepository {
     }
   }
 
-  // TODO: Implement reportPet in backend
   @override
   Future<ReportPetResponse> reportPet(ReportPetRequest reportRequest) async {
     try {
-      var url = Uri.parse('${baseUrl}pet/match');
+      var url = Uri.parse('${baseUrl}report');
       var request = http.MultipartRequest("POST", url);
       request.headers.addAll({
         'Content-Type': 'multipart/form-data',
       });
-      request.files.add(http.MultipartFile.fromBytes('img', reportRequest.img,
+      request.files.add(http.MultipartFile.fromBytes(
+          'reported_img', reportRequest.reportedImg,
           contentType: MediaType('application', 'json'), filename: "img.jpg"));
-      request.fields['id'] = reportRequest.petId;
-      request.fields['name'] = reportRequest.name;
+      request.fields['pet_id'] = reportRequest.petId;
+      request.fields['reporter_id'] = reportRequest.reporterId;
       request.fields['address'] = reportRequest.address;
-      request.fields['details'] = reportRequest.details;
+      request.fields['description'] = reportRequest.details;
 
       http.Response response =
           await http.Response.fromStream(await request.send());
       var res = json.decode(response.body);
       if (response.statusCode == 200) {
-        return res;
+        final data = ReportPetResponse.fromMap(res['report']);
+        return data;
       } else {
         throw PetException(res['msg']);
       }

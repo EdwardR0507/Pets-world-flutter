@@ -21,10 +21,12 @@ class TextAreaInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
+        label: Text(hintText!),
         border: const OutlineInputBorder(),
         hintText: hintText,
       ),
-      maxLines: 4,
+      minLines: 2,
+      maxLines: 10,
       controller: controller,
       keyboardType: keyboardType,
       obscureText: obscureText,

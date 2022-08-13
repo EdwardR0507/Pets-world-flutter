@@ -68,11 +68,14 @@ class PetDetailsPage extends GetView<PetDetailsController> {
                                         backgroundColor:
                                             const Color(0xff03dac6),
                                         foregroundColor: Colors.black,
-                                        onPressed: () => Get.toNamed(
-                                            RouteNames.reportPet,
-                                            arguments: {
-                                              'id': controller.id,
-                                            }),
+                                        onPressed: () {
+                                          Get.toNamed(RouteNames.checkImage,
+                                              arguments: {
+                                                'petId': controller.id,
+                                                'imgUrl':
+                                                    controller.pet!.imgUrl,
+                                              });
+                                        },
                                         child: const Icon(Icons.campaign),
                                       ),
                                     ),

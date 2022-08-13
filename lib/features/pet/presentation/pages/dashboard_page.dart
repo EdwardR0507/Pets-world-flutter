@@ -146,7 +146,7 @@ class LateralMenu extends StatelessWidget {
         Get.back();
       },
       child: Material(
-        color: Colors.black.withOpacity(0.1),
+        color: Colors.black.withOpacity(0.2),
         child: TweenAnimationBuilder<double>(
           duration: const Duration(milliseconds: 400),
           tween: Tween(begin: 1.0, end: 0.0),
@@ -162,18 +162,22 @@ class LateralMenu extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               MaterialButton(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                   onPressed: () {
                     Get.back();
                     Get.toNamed(RouteNames.registerPet);
                   },
                   child: const Text("Registrar Mascota")),
-              addVerticalSpace(10),
-              MaterialButton(
-                  onPressed: () {
-                    Get.back();
-                    Get.toNamed(RouteNames.reportPet);
-                  },
-                  child: const Text("Reportar Mascota")),
+              //addVerticalSpace(10),
+              // MaterialButton(
+              //     onPressed: () {
+              //       Get.back();
+              //       Get.toNamed(RouteNames.reportPet);
+              //     },
+              //     child: const Text("Reportar Mascota")),
               addVerticalSpace(130)
             ],
           ),
