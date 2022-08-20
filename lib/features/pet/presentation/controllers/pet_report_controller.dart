@@ -32,7 +32,6 @@ class PetReportController extends GetxController {
           address: addressController.text,
           details: detailsController.text,
           reportedImg: reportedImg));
-      print(res);
       return true;
     } on PetException catch (_) {
       loading.value = LoadingState.initial;

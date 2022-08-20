@@ -31,7 +31,7 @@ class PetRegisterController extends GetxController {
   final register = Rx(LoadingState.initial);
 
   List<String> sexOptions = ['Macho', 'Hembra'];
-  List<String> raceOptions = ['Beagle', 'Labrador retriever', 'Bulldog'];
+  List<String> raceOptions = ['Doberman', 'Irish Setter', 'Bulldog'];
   List<String> sizeOptions = ['Pequeño', 'Mediano', 'Grande'];
 
   RxMap<String, String?> selectOptions = RxMap(<String, String?>{

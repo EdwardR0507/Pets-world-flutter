@@ -12,4 +12,6 @@ class RouteNames {
   static const String pet = '/pet';
   static const String checkImage = '/check-image';
   static const String reportPet = '/report-pet';
+  static const String petsReported = '/pets-reported';
+  static const String checkPet = '/check-pet';
 }

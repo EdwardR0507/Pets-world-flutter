@@ -1,7 +1,9 @@
 import 'dart:convert';
 
-class ReportPetResponse {
-  ReportPetResponse({
+import '../../domain/entities/report.dart';
+
+class ReportModel extends Report {
+  ReportModel({
     required this.address,
     required this.description,
     required this.id,
@@ -9,7 +11,15 @@ class ReportPetResponse {
     required this.reportedImgPublicId,
     required this.reportedImgUrl,
     required this.reporterId,
-  });
+  }) : super(
+          address: address,
+          description: description,
+          id: id,
+          petId: petId,
+          reportedImgPublicId: reportedImgPublicId,
+          reportedImgUrl: reportedImgUrl,
+          reporterId: reporterId,
+        );
 
   final String address;
   final String description;
@@ -19,13 +29,12 @@ class ReportPetResponse {
   final String reportedImgUrl;
   final String reporterId;
 
-  factory ReportPetResponse.fromJson(String str) =>
-      ReportPetResponse.fromMap(json.decode(str));
+  factory ReportModel.fromJson(String str) =>
+      ReportModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory ReportPetResponse.fromMap(Map<String, dynamic> json) =>
-      ReportPetResponse(
+  factory ReportModel.fromMap(Map<String, dynamic> json) => ReportModel(
         address: json["address"],
         description: json["description"],
         id: json["id"],
@@ -47,6 +56,6 @@ class ReportPetResponse {
 
   @override
   String toString() {
-    return 'ReportPetResponse(address: $address, description: $description, id: $id, petId: $petId, reportedImgPublicId: $reportedImgPublicId, reportedImgUrl: $reportedImgUrl, reporterId: $reporterId)';
+    return 'ReportModel(address: $address, description: $description, id: $id, petId: $petId, reportedImgPublicId: $reportedImgPublicId, reportedImgUrl: $reportedImgUrl, reporterId: $reporterId)';
   }
 }

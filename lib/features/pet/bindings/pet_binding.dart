@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
-import 'package:pets_world/features/pet/presentation/controllers/check_image_controller.dart';
+import '../presentation/controllers/check_pet_controller.dart';
+import '../presentation/controllers/check_image_controller.dart';
+import '../presentation/controllers/pet_reported_controller.dart';
 
 import '../presentation/controllers/dashboard_controller.dart';
 import '../presentation/controllers/my_pets_controller.dart';
@@ -29,10 +31,19 @@ class PetBinding extends Bindings {
     Get.lazyPut<PetDetailsController>(() => PetDetailsController(
           petRepository: Get.find(),
         ));
-    Get.lazyPut<CheckImageController>(() => CheckImageController());
+    Get.lazyPut<CheckImageController>(() => CheckImageController(
+          petRepository: Get.find(),
+        ));
     Get.lazyPut<PetReportController>(() => PetReportController(
           localStorageRepository: Get.find(),
           petRepository: Get.find(),
         ));
+    Get.lazyPut<PetReportedController>(() => PetReportedController(
+          localStorageRepository: Get.find(),
+          petRepository: Get.find(),
+        ));
+    Get.lazyPut<CheckPetController>(
+      () => CheckPetController(petRepository: Get.find()),
+    );
   }
 }

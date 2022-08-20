@@ -7,7 +7,9 @@ import '../../../../app/routes/route_names.dart';
 import '../controllers/check_image_controller.dart';
 
 class CheckImagePage extends GetView<CheckImageController> {
-  const CheckImagePage({Key? key}) : super(key: key);
+  CheckImagePage({Key? key}) : super(key: key) {
+    controller.breed = Get.arguments['breed'];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +35,14 @@ class CheckImagePage extends GetView<CheckImageController> {
               width: double.infinity,
               height: Get.height * 0.6,
               child: GestureDetector(
-                onTap: () {
-                  controller.pickImage();
+                onTap: () async {
+                  final result = await controller.pickImage();
+                  if (result) {
+                    controller.checkImage();
+                  }
                 },
                 child: Card(
                   child: SizedBox(
-                    height: 200,
-                    width: 200,
                     child: Center(
                       child: Obx(
                         () => controller.bytesData.value == null

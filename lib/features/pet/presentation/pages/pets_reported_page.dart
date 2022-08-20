@@ -1,13 +1,13 @@
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
+import '../../../../app/routes/route_names.dart';
 
 import '../../../../app/components/custom_card.dart';
 import '../../../../app/components/custom_loader.dart';
-import '../../../../app/routes/route_names.dart';
-import '../controllers/my_pets_controller.dart';
+import '../controllers/pet_reported_controller.dart';
 
-class MyPetsPage extends GetView<MyPetsController> {
-  const MyPetsPage({Key? key}) : super(key: key);
+class PetsReportedPage extends GetView<PetReportedController> {
+  const PetsReportedPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +27,14 @@ class MyPetsPage extends GetView<MyPetsController> {
                                         image: pet.imgUrl,
                                         title: pet.name,
                                         description: pet.characteristics,
-                                        onTap: () => Get.toNamed(RouteNames.pet,
+                                        onTap: () => Get.toNamed(
+                                                RouteNames.checkPet,
                                                 arguments: {
                                                   'id': pet.id,
-                                                  'ownerId': controller.userId,
+                                                  'pet_owner': pet.ownerName,
+                                                  'pet_name': pet.name,
+                                                  'pet_breed': pet.breed,
+                                                  'pet_date': pet.registeredAt,
                                                 }));
                                   }),
                                 ],
@@ -39,7 +43,7 @@ class MyPetsPage extends GetView<MyPetsController> {
                                 height: Get.height * 0.8,
                                 child: const Center(
                                   child: Text(
-                                    "No tienes mascotas registradas",
+                                    "No tienes mascotas reportadas",
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,

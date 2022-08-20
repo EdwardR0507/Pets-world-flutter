@@ -9,6 +9,7 @@ import '../../search/search_delegate.dart';
 import '../controllers/dashboard_controller.dart';
 import 'my_pets_page.dart';
 import 'pets_page.dart';
+import 'pets_reported_page.dart';
 
 class DashboardPage extends GetView<DashboardController> {
   const DashboardPage({Key? key}) : super(key: key);
@@ -114,6 +115,7 @@ class DashboardPage extends GetView<DashboardController> {
               children: const [
                 PetsPage(),
                 MyPetsPage(),
+                PetsReportedPage(),
               ],
             )),
       ),
@@ -122,10 +124,17 @@ class DashboardPage extends GetView<DashboardController> {
               BottomNavigationBarItem(
                 icon: Icon(CustomIcons.soundDetectionDogbarking48px),
                 label: "Mascotas Perdidas",
+                tooltip: "Mascotas Perdidas",
               ),
               BottomNavigationBarItem(
                 icon: Icon(CustomIcons.pets),
                 label: "Mis mascotas",
+                tooltip: "Mis mascotas",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(CustomIcons.search),
+                label: "Mascotas Reportadas",
+                tooltip: "Mascotas Reportadas",
               ),
             ],
             currentIndex: controller.selectedIndex.value,
@@ -171,13 +180,6 @@ class LateralMenu extends StatelessWidget {
                     Get.toNamed(RouteNames.registerPet);
                   },
                   child: const Text("Registrar Mascota")),
-              //addVerticalSpace(10),
-              // MaterialButton(
-              //     onPressed: () {
-              //       Get.back();
-              //       Get.toNamed(RouteNames.reportPet);
-              //     },
-              //     child: const Text("Reportar Mascota")),
               addVerticalSpace(130)
             ],
           ),

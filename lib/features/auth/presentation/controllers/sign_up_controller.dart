@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../domain/repositories/auth_repository.dart';
 
 class SignUpController extends GetxController {

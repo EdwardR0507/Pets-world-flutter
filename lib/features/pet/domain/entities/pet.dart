@@ -6,6 +6,7 @@ class Pet {
     required this.color,
     required this.gender,
     required this.id,
+    required this.isReported,
     required this.imgPublicId,
     required this.imgUrl,
     required this.name,
@@ -21,6 +22,7 @@ class Pet {
   final String color;
   final String gender;
   final String id;
+  final bool isReported;
   final String imgPublicId;
   final String imgUrl;
   final String name;

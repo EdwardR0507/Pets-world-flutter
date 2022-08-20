@@ -5,12 +5,13 @@ import 'package:http_parser/http_parser.dart';
 
 import '../../../../app/utils/base_url.dart';
 import '../../domain/entities/pet.dart';
+import '../../domain/entities/report.dart';
 import '../../domain/exceptions/pet_exception.dart';
 import '../../domain/repositories/pet_repository.dart';
 import '../../domain/request/register_pet_request.dart';
 import '../../domain/request/report_pet_request.dart';
-import '../../domain/response/report_pet_response.dart';
 import '../models/pet_model.dart';
+import '../models/report_model.dart';
 
 class PetRepositoryImpl extends IPetRepository {
   @override
@@ -117,25 +118,25 @@ class PetRepositoryImpl extends IPetRepository {
   }
 
   @override
-  Future<String> checkPet(dynamic imgFromUser, dynamic imgPet) async {
+  Future<String> checkPet(dynamic imgFromUser) async {
     try {
-      var url = Uri.parse('${baseUrl}match');
-      var request = http.MultipartRequest("GET", url);
+      var url = Uri.parse('${baseUrl}breed');
+      var request = http.MultipartRequest("POST", url);
       request.headers.addAll({
         'Content-Type': 'multipart/form-data',
       });
-      request.files.add(http.MultipartFile.fromBytes(
-          'img_from_user', imgFromUser,
+
+      request.files.add(http.MultipartFile.fromBytes('pet_image', imgFromUser,
           contentType: MediaType('application', 'json'), filename: "img.jpg"));
-      request.fields['reference'] = imgPet;
       http.Response response =
           await http.Response.fromStream(await request.send());
       var res = json.decode(response.body);
       if (response.statusCode == 200) {
-        final msg = res['SSIM'];
+        final msg = res['raza'];
+        print(msg);
         return msg;
       } else {
-        throw PetException(res['SSIM']);
+        throw PetException(res['msg']);
       }
     } catch (e) {
       throw PetException(e.toString());
@@ -143,7 +144,7 @@ class PetRepositoryImpl extends IPetRepository {
   }
 
   @override
-  Future<ReportPetResponse> reportPet(ReportPetRequest reportRequest) async {
+  Future<Report> reportPet(ReportPetRequest reportRequest) async {
     try {
       var url = Uri.parse('${baseUrl}report');
       var request = http.MultipartRequest("POST", url);
@@ -162,7 +163,59 @@ class PetRepositoryImpl extends IPetRepository {
           await http.Response.fromStream(await request.send());
       var res = json.decode(response.body);
       if (response.statusCode == 200) {
-        final data = ReportPetResponse.fromMap(res['report']);
+        final data = ReportModel.fromMap(res['report']);
+        return data;
+      } else {
+        throw PetException(res['msg']);
+      }
+    } catch (e) {
+      throw PetException(e.toString());
+    }
+  }
+
+  @override
+  Future<List<Pet>> getReportedPetsByOwnerId(String ownerId) async {
+    try {
+      var url = Uri.parse('${baseUrl}report/pets?owner_id=$ownerId');
+      var response = await http.get(url);
+      var res = json.decode(response.body);
+      if (response.statusCode == 200) {
+        final data =
+            (res['pets'] as List).map((pet) => PetModel.fromMap(pet)).toList();
+        return data;
+      } else {
+        throw PetException(res['msg']);
+      }
+    } catch (e) {
+      throw PetException(e.toString());
+    }
+  }
+
+  @override
+  Future<String> deleteReportedPet(String reportId) async {
+    try {
+      var url = Uri.parse('${baseUrl}report?id=$reportId');
+      var response = await http.delete(url);
+      var res = json.decode(response.body);
+      if (response.statusCode == 200) {
+        final msg = res['msg'];
+        return msg;
+      } else {
+        throw PetException(res['msg']);
+      }
+    } catch (e) {
+      throw PetException(e.toString());
+    }
+  }
+
+  @override
+  Future<Report> getReport(String petId) async {
+    try {
+      var url = Uri.parse('${baseUrl}report?pet_id=$petId');
+      var response = await http.get(url);
+      var res = json.decode(response.body);
+      if (response.statusCode == 200) {
+        final data = ReportModel.fromMap(res['report']);
         return data;
       } else {
         throw PetException(res['msg']);

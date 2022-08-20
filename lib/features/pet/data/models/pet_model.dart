@@ -10,6 +10,7 @@ class PetModel extends Pet {
     required this.color,
     required this.gender,
     required this.id,
+    required this.isReported,
     required this.imgPublicId,
     required this.imgUrl,
     required this.name,
@@ -24,6 +25,7 @@ class PetModel extends Pet {
             color: color,
             gender: gender,
             id: id,
+            isReported: isReported,
             imgPublicId: imgPublicId,
             imgUrl: imgUrl,
             name: name,
@@ -38,6 +40,7 @@ class PetModel extends Pet {
   final String color;
   final String gender;
   final String id;
+  final bool isReported;
   final String imgPublicId;
   final String imgUrl;
   final String name;
@@ -57,6 +60,7 @@ class PetModel extends Pet {
         color: json["color"],
         gender: json["gender"],
         id: json["id"],
+        isReported: json["is_reported"],
         imgPublicId: json["img_public_id"],
         imgUrl: json["img_url"],
         name: json["name"],
@@ -73,6 +77,7 @@ class PetModel extends Pet {
         "color": color,
         "gender": gender,
         "id": id,
+        "is_reported": isReported,
         "img_public_id": imgPublicId,
         "img_url": imgUrl,
         "name": name,

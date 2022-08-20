@@ -5,14 +5,14 @@ import '../../../../app/components/custom_loader.dart';
 import '../../../../app/components/space.dart';
 import '../../../../app/routes/route_names.dart';
 import '../../../../app/utils/custom_snackbar.dart';
-import '../controllers/pet_details_controller.dart';
+import '../controllers/check_pet_controller.dart';
 
-class PetDetailsPage extends GetView<PetDetailsController> {
-  PetDetailsPage({Key? key}) : super(key: key) {
+class CheckPetPage extends GetView<CheckPetController> {
+  CheckPetPage({Key? key}) : super(key: key) {
     controller.id = Get.arguments['id'];
   }
   void _deletePet() async {
-    final result = await controller.deletePet();
+    final result = await controller.deleteReport(controller.report!.id);
     if (result) {
       Get.offAllNamed(RouteNames.dashboard);
     } else {
@@ -39,7 +39,7 @@ class PetDetailsPage extends GetView<PetDetailsController> {
           child: controller.loading.value == true
               ? const CustomLoader()
               : SizedBox(
-                  child: controller.pet == null
+                  child: controller.report == null
                       ? Container()
                       : Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,55 +54,69 @@ class PetDetailsPage extends GetView<PetDetailsController> {
                                       image: DecorationImage(
                                         fit: BoxFit.cover,
                                         image: NetworkImage(
-                                            controller.pet!.imgUrl),
+                                            controller.report!.reportedImgUrl),
                                       ),
                                     ),
                                   ),
-                                  Visibility(
-                                    visible: Get.arguments['ownerId'] !=
-                                        controller.pet!.ownerId,
-                                    child: Positioned(
-                                      right: 20.0,
-                                      bottom: 0.0,
-                                      child: FloatingActionButton(
-                                        backgroundColor:
-                                            const Color(0xff03dac6),
-                                        foregroundColor: Colors.black,
-                                        onPressed: () {
-                                          Get.toNamed(RouteNames.checkImage,
-                                              arguments: {
-                                                'petId': controller.id,
-                                                'imgUrl':
-                                                    controller.pet!.imgUrl,
-                                                'breed': controller.pet!.breed,
-                                              });
-                                        },
-                                        child: const Icon(Icons.campaign),
+                                  Positioned(
+                                    right: 20.0,
+                                    bottom: 0.0,
+                                    child: FloatingActionButton(
+                                      backgroundColor: Colors.red,
+                                      foregroundColor: Colors.black,
+                                      onPressed: () => Get.dialog(
+                                        AlertDialog(
+                                          title: const Text('¿Es tu mascota?'),
+                                          content: const Text(
+                                              '¿Estás seguro de que la mascota que encontraron se parece a la tuya?'),
+                                          actions: [
+                                            SizedBox(
+                                              width: Get.width * 0.2,
+                                              child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    primary: Colors.black),
+                                                child: const Text('No'),
+                                                onPressed: () {
+                                                  _deletePet();
+                                                  Get.back();
+                                                },
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: Get.width * 0.2,
+                                              child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    primary: const Color(
+                                                        0xFF6200EE)),
+                                                child: const Text('Sí'),
+                                                onPressed: () {
+                                                  Get.back();
+                                                  Get.dialog(
+                                                    const AlertDialog(
+                                                      title:
+                                                          Text('¡Felicidades!'),
+                                                      content: Text(
+                                                          'Has encontrado a tu mascota'),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  Visibility(
-                                    visible: Get.arguments['ownerId'] ==
-                                        controller.pet!.ownerId,
-                                    child: Positioned(
-                                      right: 20.0,
-                                      bottom: 0.0,
-                                      child: FloatingActionButton(
-                                        backgroundColor: Colors.red,
-                                        foregroundColor: Colors.black,
-                                        onPressed: () => _deletePet(),
-                                        child: const Icon(Icons.delete),
+                                      child: const Icon(
+                                        Icons.question_mark,
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                            addVerticalSpace(15),
                             Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(20, 20, 0, 0),
-                                child: Text(controller.pet!.name,
+                                child: Text(Get.arguments['pet_name'],
                                     style: const TextStyle(
                                         fontSize: 40,
                                         fontWeight: FontWeight.bold))),
@@ -118,31 +132,32 @@ class PetDetailsPage extends GetView<PetDetailsController> {
                                 Padding(
                                     padding:
                                         const EdgeInsets.fromLTRB(20, 25, 0, 0),
-                                    child: Text(controller.pet!.ownerName,
+                                    child: Text(Get.arguments['pet_owner'],
                                         style: textStyle)),
                               ],
                             ),
                             Row(
                               children: [
                                 const Padding(
-                                    padding: EdgeInsets.fromLTRB(25, 20, 0, 0),
-                                    child: Icon(
-                                      Icons.transgender,
-                                      size: 35.0,
-                                    )),
+                                  padding: EdgeInsets.fromLTRB(25, 20, 0, 0),
+                                  child: Icon(
+                                    Icons.transgender,
+                                    size: 35.0,
+                                  ),
+                                ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             20, 15, 0, 0),
-                                        child: Text(controller.pet!.breed,
+                                        child: Text(Get.arguments['pet_breed'],
                                             style: textStyle)),
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
                                           20, 5, 0, 0),
                                       child: Text(
-                                          'Reportado el ${_getDate(controller.pet!.registeredAt)}',
+                                          'Reportado el ${_getDate(Get.arguments['pet_date'])}',
                                           style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.normal,
@@ -152,63 +167,6 @@ class PetDetailsPage extends GetView<PetDetailsController> {
                                 )
                               ],
                             ),
-                            const Padding(
-                              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                              child: Divider(
-                                height: 20,
-                                thickness: 0.1,
-                                indent: 20,
-                                endIndent: 0,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                const Padding(
-                                    padding: EdgeInsets.fromLTRB(25, 10, 0, 0),
-                                    child: Icon(
-                                      Icons.calendar_month,
-                                      size: 35.0,
-                                    )),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 15, 0, 0),
-                                  child: Text(
-                                      'Fecha de nacimiento: ${_getDate(controller.pet!.birthdate)}',
-                                      style: textStyle),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Padding(
-                                    padding: EdgeInsets.fromLTRB(25, 20, 0, 0),
-                                    child: Icon(
-                                      Icons.palette,
-                                      size: 35.0,
-                                    )),
-                                Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(20, 20, 0, 0),
-                                    child: Text(controller.pet!.color,
-                                        style: textStyle)),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Padding(
-                                    padding: EdgeInsets.fromLTRB(25, 20, 0, 0),
-                                    child: Icon(
-                                      Icons.square_foot,
-                                      size: 35.0,
-                                    )),
-                                Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(20, 20, 0, 0),
-                                    child: Text(controller.pet!.size,
-                                        style: textStyle)),
-                              ],
-                            ),
                             const Divider(
                               height: 20,
                               thickness: 0.1,
@@ -216,16 +174,31 @@ class PetDetailsPage extends GetView<PetDetailsController> {
                               endIndent: 0,
                               color: Colors.black,
                             ),
+                            Row(
+                              children: [
+                                const Padding(
+                                    padding: EdgeInsets.fromLTRB(25, 20, 0, 0),
+                                    child: Icon(
+                                      Icons.map,
+                                      size: 35.0,
+                                    )),
+                                Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 25, 0, 0),
+                                    child: Text(controller.report!.address,
+                                        style: textStyle)),
+                              ],
+                            ),
                             const Padding(
                                 padding: EdgeInsets.fromLTRB(30, 15, 0, 0),
-                                child: Text('Características',
+                                child: Text('Detalles del avistamiento',
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold))),
                             Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(30, 20, 0, 0),
-                                child: Text(controller.pet!.characteristics,
+                                child: Text(controller.report!.description,
                                     style: textStyle)),
                             addVerticalSpace(20)
                           ],

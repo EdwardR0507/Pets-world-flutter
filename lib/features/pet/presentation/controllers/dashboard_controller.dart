@@ -21,10 +21,16 @@ class DashboardController extends GetxController {
   RxInt get selectedIndex => _selectedIndex;
   void setSelectedIndex(int index) {
     _selectedIndex.value = index;
-    if (index == 0) {
-      title.value = 'Mascotas Perdidas';
-    } else if (index == 1) {
-      title.value = 'Mis Mascotas';
+    switch (index) {
+      case 0:
+        title.value = 'Mascotas Perdidas';
+        break;
+      case 1:
+        title.value = 'Mis mascotas';
+        break;
+      case 2:
+        title.value = 'Mascotas Reportadas';
+        break;
     }
   }
 }
