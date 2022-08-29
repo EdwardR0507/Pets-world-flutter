@@ -33,11 +33,6 @@ class DashboardPage extends GetView<DashboardController> {
             )),
             child: Container(),
           ),
-          ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text("Home"),
-            onTap: () => Get.toNamed(RouteNames.dashboard),
-          ),
           AboutListTile(
             key: const Key("about"),
             applicationIcon: const Icon(CustomIcons.pets),
@@ -48,13 +43,9 @@ class DashboardPage extends GetView<DashboardController> {
               RichText(
                 text: const TextSpan(children: [
                   TextSpan(
-                      text:
-                          "Pets World es una aplicación que permite a los usuarios "
+                      text: "Pets World es una aplicación que permite a los usuarios "
                           "registrar y buscar mascotas perdidas.\n\n",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16)),
+                      style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16)),
                 ]),
               ),
             ],
@@ -78,15 +69,22 @@ class DashboardPage extends GetView<DashboardController> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFF5F5F5),
         iconTheme: const IconThemeData(color: Colors.black),
-        title: Obx(() => Text(controller.title.value,
-            style: const TextStyle(color: Colors.black))),
+        title: Obx(() => Text(controller.title.value, style: const TextStyle(color: Colors.black))),
         centerTitle: true,
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.search),
-            tooltip: 'Search',
+            tooltip: 'Buscar Mascota',
             onPressed: () {
-              showSearch(context: context, delegate: PetsLostSearch());
+              showSearch(
+                  context: context,
+                  delegate: PetsLostSearch(
+                    petsLost: controller.selectedIndex.value == 0
+                        ? controller.pets
+                        : controller.selectedIndex.value == 1
+                            ? controller.myPets
+                            : controller.myReportedPets,
+                  ));
             },
           ),
         ],
@@ -98,8 +96,7 @@ class DashboardPage extends GetView<DashboardController> {
           Navigator.of(context).push(
             PageRouteBuilder(
               opaque: false,
-              pageBuilder: (context, animation, secondaryAnimation) =>
-                  FadeTransition(
+              pageBuilder: (context, animation, secondaryAnimation) => FadeTransition(
                 opacity: animation,
                 child: const LateralMenu(),
               ),
@@ -120,6 +117,8 @@ class DashboardPage extends GetView<DashboardController> {
             )),
       ),
       bottomNavigationBar: Obx(() => BottomNavigationBar(
+            selectedFontSize: 12,
+            unselectedFontSize: 10,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(CustomIcons.soundDetectionDogbarking48px),

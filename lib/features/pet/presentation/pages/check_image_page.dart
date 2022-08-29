@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../app/components/space.dart';
 import '../../../../app/components/submit_button.dart';
@@ -17,8 +20,18 @@ class CheckImagePage extends GetView<CheckImageController> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFF5F5F5),
         iconTheme: const IconThemeData(color: Colors.black),
-        title: const Text('Seleccionar imagen',
-            style: TextStyle(color: Colors.black)),
+        title: const Text('Seleccionar imagen', style: TextStyle(color: Colors.black)),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.camera_alt),
+            onPressed: () async {
+              final result = await controller.pickImage(ImageSource.camera);
+              if (result) {
+                controller.checkImage();
+              }
+            },
+          )
+        ],
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -36,7 +49,7 @@ class CheckImagePage extends GetView<CheckImageController> {
               height: Get.height * 0.6,
               child: GestureDetector(
                 onTap: () async {
-                  final result = await controller.pickImage();
+                  final result = await controller.pickImage(ImageSource.gallery);
                   if (result) {
                     controller.checkImage();
                   }
@@ -45,7 +58,7 @@ class CheckImagePage extends GetView<CheckImageController> {
                   child: SizedBox(
                     child: Center(
                       child: Obx(
-                        () => controller.bytesData.value == null
+                        () => controller.selectedImagePath.value == ''
                             ? Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
@@ -55,7 +68,7 @@ class CheckImagePage extends GetView<CheckImageController> {
                                   ),
                                   addVerticalSpace(10),
                                   const Text(
-                                    'Selecciona la foto\n de la mascota que encontraste',
+                                    'Selecciona la foto\n de la mascota que encontraste pulsando aquí',
                                     style: TextStyle(fontSize: 20),
                                     textAlign: TextAlign.center,
                                   ),
@@ -63,8 +76,8 @@ class CheckImagePage extends GetView<CheckImageController> {
                               )
                             : Stack(
                                 children: <Widget>[
-                                  Image.memory(
-                                    controller.bytesData.value!,
+                                  Image.file(
+                                    File(controller.selectedImagePath.value),
                                     fit: BoxFit.cover,
                                   ),
                                   Positioned(
@@ -75,15 +88,13 @@ class CheckImagePage extends GetView<CheckImageController> {
                                         color: Colors.black.withOpacity(0.5),
                                         boxShadow: [
                                           BoxShadow(
-                                            color:
-                                                Colors.black.withOpacity(0.5),
+                                            color: Colors.black.withOpacity(0.5),
                                             blurRadius: 10,
                                             spreadRadius: 5,
                                           ),
                                         ],
                                       ),
-                                      constraints: const BoxConstraints(
-                                          maxWidth: 100, maxHeight: 100),
+                                      constraints: const BoxConstraints(maxWidth: 100, maxHeight: 100),
                                       child: Card(
                                         child: Image.network(
                                           Get.arguments['imgUrl'],
@@ -106,13 +117,12 @@ class CheckImagePage extends GetView<CheckImageController> {
           addVerticalSpace(20),
           SizedBox(
             child: Obx(
-              () => controller.bytesData.value != null
+              () => controller.selectedImagePath.value != ''
                   ? controller.analizing.value
                       ? Column(
                           children: <Widget>[
                             const CircularProgressIndicator(
-                              valueColor:
-                                  AlwaysStoppedAnimation(Color(0xFF6200EE)),
+                              valueColor: AlwaysStoppedAnimation(Color(0xFF6200EE)),
                             ),
                             addVerticalSpace(10),
                             const Text(
@@ -134,10 +144,7 @@ class CheckImagePage extends GetView<CheckImageController> {
   Widget showResults() => Obx(
         () => Column(
           children: [
-            Text(
-                controller.match.value
-                    ? '¡La mascota es de la misma raza!'
-                    : 'Las mascotas no son de la misma raza.',
+            Text(controller.match.value ? '¡La mascota es de la misma raza!' : 'Las mascotas no son de la misma raza.',
                 style: const TextStyle(fontSize: 20)),
             Container(
               margin: const EdgeInsets.only(top: 20),
@@ -156,7 +163,7 @@ class CheckImagePage extends GetView<CheckImageController> {
                               onPressed: () {
                                 Get.toNamed(RouteNames.reportPet, arguments: {
                                   'petId': Get.arguments['petId'],
-                                  'reportedImg': controller.bytesData.value,
+                                  'reportedImg': controller.selectedImagePath.value,
                                 });
                               },
                               text: 'CONTINUAR'),

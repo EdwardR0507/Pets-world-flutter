@@ -15,6 +15,7 @@ class PetBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<DashboardController>(() => DashboardController(
           localStorageRepository: Get.find(),
+          petRepository: Get.find(),
         ));
     Get.lazyPut<MyPetsController>(() => MyPetsController(
           localStorageRepository: Get.find(),

@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../../app/routes/route_names.dart';
+import '../domain/entities/pet.dart';
 
 class PetsLostSearch extends SearchDelegate {
-  String selection = "";
+  PetsLostSearch({required this.petsLost})
+      : super(
+          searchFieldLabel: "Ingrese el nombre de la mascota",
+          searchFieldStyle: const TextStyle(fontSize: 16),
+        );
 
-  final petsLost = [
-    "Pluto",
-    "Felix",
-    "Lucas",
-  ];
-
-  final recentPetsLost = [
-    "Pluto",
-    "Felix",
-  ];
+  final List<Pet> petsLost;
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -40,38 +38,41 @@ class PetsLostSearch extends SearchDelegate {
   }
 
   @override
-  Widget buildResults(BuildContext context) {
-    // Show results based on the search
-    return Center(
-      child: Container(
-        height: 100.0,
-        width: 100.0,
-        color: Colors.blueAccent,
-        child: Text(selection),
-      ),
+  Widget buildSuggestions(BuildContext context) {
+    final suggestionList = petsLost
+        .where((element) =>
+            element.name.toLowerCase().startsWith(query.toLowerCase()))
+        .toList();
+    return ListView.builder(
+      itemCount: suggestionList.length,
+      itemBuilder: (context, index) {
+        return Column(
+          children: [
+            ListTile(
+              leading: SizedBox(
+                height: 50,
+                width: 50,
+                child: Image.network(suggestionList[index].imgUrl,
+                    fit: BoxFit.cover),
+              ),
+              title: Text(suggestionList[index].name),
+              onTap: () => Get.toNamed(
+                RouteNames.pet,
+                arguments: {
+                  'id': petsLost[index].id,
+                },
+              ),
+            ),
+            const Divider(),
+          ],
+        );
+      },
     );
   }
 
   @override
-  Widget buildSuggestions(BuildContext context) {
-    final suggestionsList = query.isEmpty
-         ? recentPetsLost
-         : petsLost
-             .where((p) => p.toLowerCase().contains(query.toLowerCase()))
-             .toList();
-
-     return ListView.builder(
-       itemCount: suggestionsList.length,
-       itemBuilder: (context, index) {
-         return ListTile(
-           leading: const Icon(Icons.all_inbox),
-           title: Text(suggestionsList[index]),
-           onTap: () {
-             selection = petsLost[index];
-             showResults(context);
-           },
-         );
-       },
-     );
+  Widget buildResults(BuildContext context) {
+    // TODO: implement buildResults
+    throw UnimplementedError();
   }
 }
